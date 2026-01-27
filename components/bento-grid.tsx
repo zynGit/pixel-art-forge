@@ -65,6 +65,7 @@ const pixelArtIdeas = [
 
 export function BentoGrid() {
   const [selectedPalette, setSelectedPalette] = useState(-1)
+  const [lastSelectedPalette, setLastSelectedPalette] = useState(0)
   const [paletteEnabled, setPaletteEnabled] = useState(false)
   // index into GRID_PRESETS
   const [resolutionIndex, setResolutionIndex] = useState(6) // default 64px
@@ -314,7 +315,7 @@ export function BentoGrid() {
         </div> */}
 
         {/* Bento Grid */}
-        <div className="mt-16 grid grid-cols-1 gap-4 md:grid-cols-4 md:grid-rows-[auto_auto_auto]">
+        <div className="mt-1 grid grid-cols-1 gap-4 md:grid-cols-4 md:grid-rows-[auto_auto_auto]">
           
           {/* Color Palette Card - Top Left */}
           <div className="group relative overflow-hidden rounded-2xl border border-border bg-card/80 p-5 transition-all duration-300 hover:border-accent/50 md:col-span-1">
@@ -330,11 +331,18 @@ export function BentoGrid() {
                   onCheckedChange={async (checked) => {
                     setPaletteEnabled(checked)
                     if (checked) {
-                      setSelectedPalette(0)
+                      const targetIndex =
+                        lastSelectedPalette >= 0 && lastSelectedPalette < palettes.length
+                          ? lastSelectedPalette
+                          : 0
+                      setSelectedPalette(targetIndex)
                       if (originalUrl) {
-                        await convertToPixelArt(originalUrl, undefined, 0)
+                        await convertToPixelArt(originalUrl, undefined, targetIndex)
                       }
                     } else {
+                      if (selectedPalette >= 0 && selectedPalette < palettes.length) {
+                        setLastSelectedPalette(selectedPalette)
+                      }
                       setSelectedPalette(-1)
                       if (originalUrl) {
                         // Pass -1 to explicitly disable palette, avoiding async state issue
@@ -353,6 +361,7 @@ export function BentoGrid() {
                       if (!paletteEnabled) {
                         setPaletteEnabled(true)
                       }
+                      setLastSelectedPalette(index)
                       setSelectedPalette(index)
                       if (originalUrl) {
                         await convertToPixelArt(originalUrl, undefined, index)
@@ -385,6 +394,11 @@ export function BentoGrid() {
               <p className="mt-3 text-xs text-muted-foreground">
                 Active: <span className="text-accent">{paletteEnabled && selectedPalette >= 0 ? palettes[selectedPalette]?.name : "None"}</span>
               </p>
+              <div className="mt-4 rounded-lg bg-accent/10 p-3">
+                <p className="text-xs leading-relaxed text-muted-foreground">
+                  <span className="font-medium text-accent">Quick Tip:</span> Hover over any palette to see its name, and click to apply. You can use the toggle switch to instantly compare your original photo colors with the new pixel art generator results.
+                </p>
+              </div>
             </div>
           </div>
 

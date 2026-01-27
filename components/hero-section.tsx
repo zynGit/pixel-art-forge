@@ -12,21 +12,21 @@ export function HeroSection() {
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-10 md:flex-row md:center">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 md:flex-row md:center">
           {/* 左侧文字区域 */}
-          <div className="w-full text-center md:w-1/2 md:text-left">
+          <div className="w-full text-center md:w-3/5 md:text-left">
             <div className="mx-auto max-w-2xl">
-              <h2 className="text-balance text-5xl font-bold tracking-tight text-foreground leading-normal">
-                Transform Any Image To Pixel Art
-              </h2>
+              <h1 className=" text-5xl font-bold tracking-tight text-foreground leading-normal">
+              Image to Pixel Art Converter
+              </h1>
               <p className="mt-4 text-pretty text-lg text-muted-foreground">
-                Powerful tools designed for creating stunning pixel art in seconds
+              Instantly transform images to crisp pixel art. A free, professional generator with pro palettes.
               </p>
             </div>
           </div>
 
           {/* 右侧图片对比区域 */}
-          <div className="w-full md:w-1/2">
+          <div className="w-full md:w-2/5">
             <div className="mx-auto max-w-md md:max-w-sm">
               <ImageComparison />
             </div>

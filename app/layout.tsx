@@ -9,17 +9,12 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'PixelArtForge | Professional Image to Pixel Art Converter',
-  description: 'Convert any image to crisp pixel art instantly. 100% private, browser-based algorithmic processing with professional palettes like PICO-8 and Sunset 8. No AI blur, just precision.',
-  keywords: [
-    'pixel art converter', 
-    'image to pixel art', 
-    'game asset creator', 
-    'PICO-8 palette', 
-    'retro art generator', 
-    'transparent pixel sprite'
-  ],
+  title: 'Image to Pixel Art Converter | PixelArtForge',
+  description: 'Free online pixel art converter. Instantly turn images into pixel art with pro palettes like PICO-8 & Sunset 8. 100% private, fast, and easy.',
   authors: [{ name: 'PixelArtForge Team' }],
+  alternates: {
+    canonical: 'https://www.pixel-art.online/',
+  },
   icons: {
     icon: '/icon.png',
     apple: '/icon.png',
