@@ -15,6 +15,27 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://www.pixel-art.online/',
   },
+  openGraph: {
+    title: 'Image to Pixel Art Converter | PixelArtForge',
+    description: 'Free online pixel art converter. Instantly turn images into pixel art with pro palettes like PICO-8 & Sunset 8. 100% private, fast, and easy.',
+    url: 'https://www.pixel-art.online/',
+    siteName: 'PixelArtForge',
+    images: [
+      {
+        url: '/og-image.JPG',
+        width: 1200,
+        height: 917,
+        alt: 'PixelArtForge - Image to Pixel Art Converter',
+      },
+    ],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Image to Pixel Art Converter | PixelArtForge',
+    description: 'Free online pixel art converter. Instantly turn images into pixel art with pro palettes like PICO-8 & Sunset 8. 100% private, fast, and easy.',
+    images: ['/og-image.JPG'],
+  },
   icons: {
     icon: '/icon.png',
     apple: '/icon.png',
