@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
 import { Menu, X, Moon, Sun, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Logo } from "@/components/logo"
@@ -14,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useLocale } from "next-intl"
+import { useRouter, usePathname } from '@/i18n/routing';
 
 const navLinks = [
   { label: "Features", href: "#features" },
@@ -40,16 +40,12 @@ export function Header() {
   const currentLanguage = languages.find((lang) => lang.code === locale) || languages[0]
 
   const switchLocale = (nextLocale: string) => {
-    if (nextLocale === locale) return
-
-    // 假设路径形如 /en/...，只替换第一个 segment
-    const segments = pathname.split("/")
-    if (segments.length > 1) {
-      segments[1] = nextLocale
-    }
-    const newPath = segments.join("/") || `/${nextLocale}`
-    router.push(newPath)
-  }
+    // next-intl 的 useRouter 会自动处理：
+    // 1. 如果 nextLocale 是 'en'，跳转到 /xxx
+    // 2. 如果 nextLocale 是 'fr'，跳转到 /fr/xxx
+    // 3. 它会自动保留当前的查询参数 (query params)
+    router.replace(pathname, { locale: nextLocale });
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">

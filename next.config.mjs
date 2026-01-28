@@ -1,15 +1,12 @@
-import createNextIntlPlugin from 'next-intl/plugin'
+// next.config.mjs
+import createNextIntlPlugin from 'next-intl/plugin';
 
-const withNextIntl = createNextIntlPlugin()
+// 指向你刚修改的那个文件
+const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  images: {
-    unoptimized: true,
-  },
-}
+  // ... 你的其他配置
+};
 
-export default withNextIntl(nextConfig)
+export default withNextIntl(nextConfig);

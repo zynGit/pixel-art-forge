@@ -1,12 +1,10 @@
-import createMiddleware from 'next-intl/middleware'
-import { locales, defaultLocale } from './i18n'
+// src/middleware.ts
+import createMiddleware from 'next-intl/middleware';
+import { routing } from './i18n/routing';
 
-export default createMiddleware({
-  locales,
-  defaultLocale,
-})
+export default createMiddleware(routing);
 
 export const config = {
-  matcher: ['/((?!api|_next|.*\\..*).*)'],
-}
-
+  // 匹配所有路径，除了静态文件和 API
+  matcher: ['/((?!api|_next|.*\\..*).*)']
+};
