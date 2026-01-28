@@ -1,8 +1,13 @@
+ "use client"
+
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import ImageComparison from "@/components/react-compare-slider"
+import { useTranslations } from "next-intl"
 
 export function HeroSection() {
+  const t = useTranslations("HeroSection")
+
   return (
     <section className="relative overflow-hidden pt-32 pb-10 sm:pt-40 sm:pb-12">
       {/* Background glow effects */}
@@ -17,10 +22,10 @@ export function HeroSection() {
           <div className="w-full text-center md:w-3/5 md:text-left">
             <div className="mx-auto max-w-2xl">
               <h1 className=" text-5xl font-bold tracking-tight text-foreground leading-normal">
-              Image to Pixel Art Converter
+                {t("title")}
               </h1>
               <p className="mt-4 text-pretty text-lg text-muted-foreground">
-              Instantly transform images to crisp pixel art. A free, professional generator with pro palettes.
+                {t("subtitle")}
               </p>
             </div>
           </div>

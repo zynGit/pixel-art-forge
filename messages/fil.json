@@ -1,0 +1,74 @@
+{
+  "HeroSection": {
+    "title": "Image to Pixel Art Converter",
+    "subtitle": "Gawing pixel art ang mga larawan agad. Isang libreng propesyonal na generator na may mga pro palettes."
+  },
+  "BentoGrid": {
+    "selectPalette": "Pumili ng Palette",
+    "none": "Wala",
+    "active": "Aktibo: ",
+    "quickTip": "Mabilis na Tip:",
+    "tipContent": "I-hover ang mouse sa anumang palette para makita ang pangalan nito, at i-click para ilapat. Maaari mong gamitin ang toggle switch para agad na maikumpara ang orihinal na kulay ng larawan sa mga resulta ng pixel art generator.",
+    "cpuBadge": "Mabilis. Lokal. Eksakto.",
+    "uploadTitle": "I-drag & drop o i-click para mag-upload",
+    "uploadSubtitle": "Mga larawang PNG, JPG, WEBP",
+    "pixelArt": "Pixel Art",
+    "downloadBtn": "I-download ang PNG (HD)",
+    "resolution": "Resolusyon",
+    "output": "Resulta: ",
+    "taglines": {
+      "retroSprite": "Retro Sprite",
+      "eightBit": "8-bit Classic",
+      "indieDetail": "Indie Detail",
+      "photoReal": "Photo Real"
+    },
+    "enhancements": {
+      "title": "Mga Pagpapahusay",
+      "addOutline": "Magdagdag ng Black Outline",
+      "gridOverlay": "Grid Overlay"
+    },
+    "toasts": {
+      "unsupportedFile": "Hindi suportadong file",
+      "unsupportedFileDesc": "Mangyaring mag-upload ng image file (PNG, JPG, WEBP).",
+      "noImage": "Walang na-upload na larawan",
+      "noImageDesc": "Mangyaring mag-upload ng larawan bago mag-download.",
+      "generating": "Bumubuo ng mataas na kalidad na export",
+      "creatingScale": "Ginagawa ang {scale} scale version...",
+      "downloadStarted": "Nagsimula na ang pag-download",
+      "downloadStartedDesc": "Ang iyong {scale} scale pixel art ay nai-export na. Tingnan ang iyong downloads folder.",
+      "downloadFailed": "Bigo ang pag-download",
+      "downloadFailedDesc": "May mali sa pagbuo ng export. Mangyaring subukan muli.",
+      "conversionFailed": "Bigo ang conversion",
+      "conversionFailedDesc": "Hindi namin ma-convert ang iyong larawan. Mangyaring subukan ang ibang larawan."
+    }
+  },
+  "FAQSection": {
+    "title": "FAQ sa Image to Pixel Art",
+    "description": "May mga katanungan tungkol sa aming pixel art generator? Tingnan ang mga detalye sa kanan para sa mga tip sa propesyonal na conversion at mga setting ng palette.",
+    "items": [
+      {
+        "question": "Ano ang PixelArtForge?",
+        "answer": "Ang PixelArtForge ay isang propesyonal na image to pixel art converter na agad na ginagawang crisp pixel art ang anumang larawan. I-fine-tune ang iyong mga resulta gamit ang tumpak na resolution control at mga piniling propesyonal na palette para sa pinakamahusay na retro aesthetic."
+      },
+      {
+        "question": "Paano ko ilalapat ang mga propesyonal na palette sa aking pixel art?",
+        "answer": "Sa kaliwa ng image upload area, makikita mo ang \"Pumili ng Palette\" panel. I-click lamang ang anumang propesyonal na preset (tulad ng PICO-8 o Sunset 8) para agad na mailapat ang mga klasikong retro color profile sa iyong conversion.\n\nReal-time na Interaksyon: I-hover ang iyong mouse sa anumang color strip para makita ang pangalan ng palette. Ang \"Aktibo\" na label ay magpapakita kung aling palette ang kasalukuyang napili.\n\nFlexible na Kontrol: Gamitin ang toggle switch sa itaas para i-enable o i-disable ang palette effect anumang oras. Pinapayagan ka nitong madaling maikumpara ang mga orihinal na kulay ng larawan sa mga propesyonal na retro na resulta."
+      },
+      {
+        "question": "Anong mga karagdagang feature ang inaalok ng PixelArtForge bukod sa pixelation?",
+        "answer": "Ang PixelArtForge ay isang komprehensibong image to pixel art converter na may mga advanced na tool sa pag-refine:\n\n1. Mga Piniling Palette: Agad na ilapat ang mga iconic na color set tulad ng PICO-8 o Sunset 8 para makamit ang tunay na retro aesthetic.\n\n2. Mga Pagpapahusay sa Pixel: Magdagdag ng lalim gamit ang mga espesyal na Outline at Dither effect. Ang mga ito ay precision-optimized para sa mga transparent na larawan, kaya ito ang perpektong pixel art generator para sa paglikha ng mataas na kalidad na mga game sprite."
+      },
+      {
+        "question": "Gaano katagal bago ma-convert ang isang larawan sa pixel art?",
+        "answer": "Ang conversion ay instant para sa karamihan ng mga larawan. Dahil ang PixelArtForge ay gumagamit ng mataas na pagganap na browser-based na pixel art generator, ang iyong mga larawan ay pinoproseso nang lokal sa loob ng ilang segundo."
+      },
+      {
+        "question": "Maaari ko bang gamitin ang nabuong pixel art para sa mga komersyal na proyekto?",
+        "answer": "Siyempre! Hawak mo ang 100% na pagmamay-ari at buong komersyal na karapatan para sa lahat ng likhang sining na ginawa gamit ang aming converter. Para sa iyong seguridad, ang PixelArtForge ay nagpoproseso ng mga larawan nang buo sa iyong browser. Ang iyong mga orihinal na file ay hindi kailanman inu-upload sa aming mga server."
+      }
+    ]
+  },
+  "Footer": {
+    "copyright": "© 2026 PixelArtForge. Ginawa para sa Pixel Art Community."
+  }
+}

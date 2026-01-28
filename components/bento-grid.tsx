@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/select"
 import { useToast } from "@/hooks/use-toast"
 import { pixelateImageFromUrl } from "@/lib/pixelate"
+import { useTranslations } from "next-intl"
 
 const palettes = [
   {name: "PICO_8", colors: [
@@ -64,6 +65,7 @@ const pixelArtIdeas = [
 ]
 
 export function BentoGrid() {
+  const t = useTranslations("BentoGrid")
   const [selectedPalette, setSelectedPalette] = useState(-1)
   const [lastSelectedPalette, setLastSelectedPalette] = useState(0)
   const [paletteEnabled, setPaletteEnabled] = useState(false)
@@ -81,6 +83,18 @@ export function BentoGrid() {
 
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const { toast } = useToast()
+  
+  const GRID_PRESETS = [
+    { value: 16, label: "16", tagline: t("taglines.retroSprite") },
+    { value: 32, label: "32", tagline: t("taglines.eightBit") },
+    { value: 48, label: "48", tagline: "" },
+    { value: 64, label: "64", tagline: t("taglines.indieDetail") },
+    { value: 80, label: "80", tagline: "" },
+    { value: 96, label: "96", tagline: "" },
+    { value: 128, label: "128", tagline: t("taglines.photoReal") },
+    { value: 144, label: "144", tagline: t("taglines.photoReal") },
+  ] as const
+
   const currentPreset = GRID_PRESETS[resolutionIndex]
 
   const handleUploadClick = () => {
@@ -90,8 +104,8 @@ export function BentoGrid() {
   const processFile = async (file: File) => {
     if (!file.type.startsWith("image/")) {
       toast({
-        title: "Unsupported file",
-        description: "Please upload an image file (PNG, JPG, WEBP).",
+        title: t("toasts.unsupportedFile"),
+        description: t("toasts.unsupportedFileDesc"),
         variant: "destructive",
       })
       return
@@ -186,8 +200,8 @@ export function BentoGrid() {
     } catch (error) {
       console.error(error)
       toast({
-        title: "Conversion failed",
-        description: "We couldn't convert your image. Please try another image.",
+        title: t("toasts.conversionFailed"),
+        description: t("toasts.conversionFailedDesc"),
         variant: "destructive",
       })
     }
@@ -229,8 +243,8 @@ export function BentoGrid() {
   const handleDownload = async () => {
     if (!originalUrl) {
       toast({
-        title: "No image uploaded",
-        description: "Please upload an image before downloading.",
+        title: t("toasts.noImage"),
+        description: t("toasts.noImageDesc"),
         variant: "destructive",
       })
       return
@@ -239,8 +253,8 @@ export function BentoGrid() {
     try {
       // Show loading toast
       toast({
-        title: "Generating high-quality export",
-        description: `Creating ${exportScale} scale version...`,
+        title: t("toasts.generating"),
+        description: t("toasts.creatingScale", { scale: exportScale }),
       })
 
       // Get current settings
@@ -281,14 +295,14 @@ export function BentoGrid() {
       }, 100)
 
       toast({
-        title: "Download started",
-        description: `Your ${exportScale} scale pixel art has been exported. Check your downloads folder.`,
+        title: t("toasts.downloadStarted"),
+        description: t("toasts.downloadStartedDesc", { scale: exportScale }),
       })
     } catch (error) {
       console.error(error)
       toast({
-        title: "Download failed",
-        description: "Something went wrong while generating the export. Please try again.",
+        title: t("toasts.downloadFailed"),
+        description: t("toasts.downloadFailedDesc"),
         variant: "destructive",
       })
     }
@@ -324,7 +338,7 @@ export function BentoGrid() {
             </div>
             <div className="relative">
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-semibold text-foreground">Select Palette</h3>
+                <h3 className="text-sm font-semibold text-foreground">{t("selectPalette")}</h3>
                 <Switch
                   checked={paletteEnabled}
                   disabled={!originalUrl}
@@ -392,11 +406,11 @@ export function BentoGrid() {
                 ))}
               </div>
               <p className="mt-3 text-xs text-muted-foreground">
-                Active: <span className="text-accent">{paletteEnabled && selectedPalette >= 0 ? palettes[selectedPalette]?.name : "None"}</span>
+                {t("active")}<span className="text-accent">{paletteEnabled && selectedPalette >= 0 ? palettes[selectedPalette]?.name : t("none")}</span>
               </p>
               <div className="mt-4 rounded-lg bg-accent/10 p-3">
                 <p className="text-xs leading-relaxed text-muted-foreground">
-                  <span className="font-medium text-accent">Quick Tip:</span> Hover over any palette to see its name, and click to apply. You can use the toggle switch to instantly compare your original photo colors with the new pixel art generator results.
+                  <span className="font-medium text-accent">{t("quickTip")}</span> {t("tipContent")}
                 </p>
               </div>
             </div>
@@ -410,7 +424,7 @@ export function BentoGrid() {
             {/* Powered by AI Badge */}
             <div className="absolute top-3 right-3 z-10 flex items-center gap-1.5 rounded-full bg-secondary/80 px-2.5 py-1 text-xs text-muted-foreground backdrop-blur-sm">
               <Cpu className="h-3 w-3 text-accent" />
-              <span>Fast. Local. Precise.</span>
+              <span>{t("cpuBadge")}</span>
             </div>
             <div className="relative flex h-full flex-col">
               {/* Upload Area */}
@@ -429,10 +443,10 @@ export function BentoGrid() {
                   <Upload className="h-8 w-8 text-accent" />
                 </div>
                 <p className="mt-4 text-center text-sm font-medium text-foreground">
-                  Drag & drop or Click to upload
+                  {t("uploadTitle")}
                 </p>
                 <p className="mt-1 text-center text-xs text-muted-foreground">
-                  PNG, JPG, WEBP images
+                  {t("uploadSubtitle")}
                 </p>
                 <input
                   ref={fileInputRef}
@@ -446,7 +460,7 @@ export function BentoGrid() {
               {/* Pixel Art Preview */}
               <div className={`mt-5 rounded-xl border border-border bg-secondary/30 p-4 ${pixelUrl ? " block" : " hidden"}`}>
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
-                  <span className="text-accent">Pixel Art</span>
+                  <span className="text-accent">{t("pixelArt")}</span>
                 </div>
                 <div
                   className={`mt-3 w-full rounded-lg bg-secondary/50 overflow-auto ${
@@ -467,7 +481,7 @@ export function BentoGrid() {
                       className="block"
                     />
                   ) : (
-                    <span className="text-xs text-accent">Pixel Art</span>
+                    <span className="text-xs text-accent">{t("pixelArt")}</span>
                   )}
                 </div>
               </div>
@@ -480,7 +494,7 @@ export function BentoGrid() {
                     className="flex-1 bg-accent text-background hover:bg-accent/90"
                   >
                     <Download className="mr-2 h-4 w-4" />
-                    Download PNG (HD)
+                    {t("downloadBtn")}
                   </Button>
                   <Select value={exportScale} onValueChange={setExportScale}>
                     <SelectTrigger className="w-20 border-border bg-secondary/50">
@@ -513,7 +527,7 @@ export function BentoGrid() {
               <div className="absolute -inset-px rounded-2xl bg-accent/5" />
             </div>
             <div className="relative">
-              <h3 className="text-sm font-semibold text-foreground">Resolution</h3>
+              <h3 className="text-sm font-semibold text-foreground">{t("resolution")}</h3>
               <div className="mt-6">
                 <Slider
                   value={[resolutionIndex]}
@@ -540,7 +554,7 @@ export function BentoGrid() {
                 </div>
               </div>
               <p className="mt-4 text-xs text-muted-foreground">
-                Output:{" "}
+                {t("output")}{" "}
                 <span className="text-accent font-medium">
                   {currentPreset.label}
                   {currentPreset.tagline ? ` · ${currentPreset.tagline}` : ""}
@@ -555,23 +569,11 @@ export function BentoGrid() {
               <div className="absolute -inset-px rounded-2xl bg-accent/5" />
             </div>
             <div className="relative">
-              <h3 className="text-sm font-semibold text-foreground">Enhancements</h3>
+              <h3 className="text-sm font-semibold text-foreground">{t("enhancements.title")}</h3>
               <div className="mt-4 space-y-4">
-                {/* <div className="flex items-center justify-between">
-                  <Label htmlFor="remove-bg" className="text-xs text-muted-foreground cursor-pointer">
-                    Remove Background
-                  </Label>
-                  <Switch
-                    id="remove-bg"
-                    checked={enhancements.removeBackground}
-                    onCheckedChange={(checked) =>
-                      setEnhancements((prev) => ({ ...prev, removeBackground: checked }))
-                    }
-                  />
-                </div> */}
                 <div className="flex items-center justify-between">
                   <Label htmlFor="add-outline" className="text-xs text-muted-foreground cursor-pointer">
-                    Add Black Outline
+                    {t("enhancements.addOutline")}
                   </Label>
                   <Switch
                     id="add-outline"
@@ -587,7 +589,7 @@ export function BentoGrid() {
                 </div>
                 <div className="flex items-center justify-between">
                   <Label htmlFor="grid-overlay" className="text-xs text-muted-foreground cursor-pointer">
-                    Grid Overlay
+                    {t("enhancements.gridOverlay")}
                   </Label>
                   <Switch
                     id="grid-overlay"

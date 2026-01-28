@@ -1,0 +1,75 @@
+{
+  "HeroSection": {
+    "title": "Image to Pixel Art Converter",
+    "subtitle": "Instantly transform images to crisp pixel art. A free, professional generator with pro palettes."
+  },
+  "BentoGrid": {
+    "selectPalette": "Select Palette",
+    "none": "None",
+    "active": "Active: ",
+    "quickTip": "Quick Tip:",
+    "tipContent": "Hover over any palette to see its name, and click to apply. You can use the toggle switch to instantly compare your original photo colors with the new pixel art generator results.",
+    "cpuBadge": "Fast. Local. Precise.",
+    "uploadTitle": "Drag & drop or Click to upload",
+    "uploadSubtitle": "PNG, JPG, WEBP images",
+    "pixelArt": "Pixel Art",
+    "downloadBtn": "Download PNG (HD)",
+    "resolution": "Resolution",
+    "output": "Output: ",
+    "taglines": {
+      "retroSprite": "Retro Sprite",
+      "eightBit": "8-bit Classic",
+      "indieDetail": "Indie Detail",
+      "photoReal": "Photo Real"
+    },
+    "enhancements": {
+      "title": "Enhancements",
+      "addOutline": "Add Black Outline",
+      "gridOverlay": "Grid Overlay"
+    },
+    "toasts": {
+      "unsupportedFile": "Unsupported file",
+      "unsupportedFileDesc": "Please upload an image file (PNG, JPG, WEBP).",
+      "noImage": "No image uploaded",
+      "noImageDesc": "Please upload an image before downloading.",
+      "generating": "Generating high-quality export",
+      "creatingScale": "Creating {scale} scale version...",
+      "downloadStarted": "Download started",
+      "downloadStartedDesc": "Your {scale} scale pixel art has been exported. Check your downloads folder.",
+      "downloadFailed": "Download failed",
+      "downloadFailedDesc": "Something went wrong while generating the export. Please try again.",
+      "conversionFailed": "Conversion failed",
+      "conversionFailedDesc": "We couldn't convert your image. Please try another image."
+    }
+  },
+  "FAQSection": {
+    "title": "Image to Pixel Art FAQ",
+    "description": "Have questions about our pixel art generator? Check the details on the right for tips on professional image to pixel art conversion and palette settings.",
+    "items": [
+      {
+        "question": "What is PixelArtForge?",
+        "answer": "PixelArtForge is a professional image to pixel art converter that transforms any photo into crisp pixel art instantly. Fine-tune your image to pixel results with precise resolution control and curated professional palettes for the ultimate retro aesthetic."
+      },
+      {
+        "question": "How do I apply professional palettes to my pixel art?",
+        "answer": "To the left of the image upload area, you will find the \"Select Palette\" panel. Simply click on any professional preset (such as PICO-8 or Sunset 8) to instantly apply classic retro color profiles to your image to pixel art conversion.\n\nReal-time Interaction: Hover your mouse over any color strip to reveal the palette's name. The \"Active\" label will indicate which palette is currently selected.\n\nFlexible Control: Use the toggle switch at the top to enable or disable the palette effect at any time. This allows you to easily compare the original image colors with the professional retro results.\n\nBy using these curated palettes, your pixel art generator can produce more authentic artwork that adheres to classic retro hardware standards."
+      },
+      {
+        "question": "What additional features does PixelArtForge offer besides pixelation?",
+        "answer": "PixelArtForge is a comprehensive image to pixel art converter featuring advanced refinement tools:\n\n1. Curated Palettes: Instantly apply iconic color sets like PICO-8 or Sunset 8 to achieve authentic retro aesthetics.\n\n2. Pixel Enhancements: Add depth with specialized Outline and Dither effects. These are precision-optimized for transparent images, making it the perfect pixel art generator for creating high-quality game sprites."
+      },
+      {
+        "question": "How long does it take to convert an image to pixel art?",
+        "answer": "Conversion is instant for most images. Since PixelArtForge uses a high-performance browser-based pixel art generator, your photos are processed locally in seconds."
+      },
+      {
+        "question": "Can I use the generated pixel art for commercial projects?",
+        "answer": "Absolutely!You retain 100% ownership and full commercial rights for all artwork created with our image to pixel art converter.\nFor your security, PixelArtForge processes images entirely in your browser. Your original files are never uploaded to our servers, ensuring your creative work and privacy remain completely under your control."
+      }
+    ]
+  },
+  "Footer": {
+    "copyright": "© 2026 PixelArtForge. Built for the Pixel Art Community."
+  }
+}
+

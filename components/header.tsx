@@ -1,10 +1,19 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Menu, X } from "lucide-react"
+import { usePathname, useRouter } from "next/navigation"
+import { Menu, X, Moon, Sun, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Logo } from "@/components/logo"
+import { useTheme } from "next-themes"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { useLocale } from "next-intl"
 
 const navLinks = [
   { label: "Features", href: "#features" },
@@ -13,8 +22,34 @@ const navLinks = [
   { label: "Showcase", href: "#showcase" },
 ]
 
+const languages = [
+  { code: "en", label: "English" },
+  { code: "fr", label: "Français" },
+  { code: "es", label: "Español" },
+  { code: "fil", label: "Filipino" },
+  // { code: "pl", label: "Polski" },
+]
+
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { theme, setTheme } = useTheme()
+  const locale = useLocale()
+  const router = useRouter()
+  const pathname = usePathname()
+
+  const currentLanguage = languages.find((lang) => lang.code === locale) || languages[0]
+
+  const switchLocale = (nextLocale: string) => {
+    if (nextLocale === locale) return
+
+    // 假设路径形如 /en/...，只替换第一个 segment
+    const segments = pathname.split("/")
+    if (segments.length > 1) {
+      segments[1] = nextLocale
+    }
+    const newPath = segments.join("/") || `/${nextLocale}`
+    router.push(newPath)
+  }
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
@@ -44,8 +79,44 @@ export function Header() {
           </Button>
         </div> */}
 
+        {/* 多语言切换 */}
+        <div className="hidden items-center gap-2 md:flex">
+          {/* Language Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-foreground">
+                <Globe className="h-4 w-4" />
+                <span>{currentLanguage.label}</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {languages.map((lang) => (
+                <DropdownMenuItem
+                  key={lang.code}
+                  onClick={() => switchLocale(lang.code)}
+                  className={locale === lang.code ? "bg-accent/10 text-accent" : ""}
+                >
+                  {lang.label}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Theme Toggle */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="text-muted-foreground hover:text-foreground"
+          >
+            <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            <span className="sr-only">Toggle theme</span>
+          </Button>
+        </div>
+
          {/* Mobile Menu Button  */}
-        {/* <button
+        <button
           type="button"
           className="md:hidden"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -55,14 +126,14 @@ export function Header() {
           ) : (
             <Menu className="h-6 w-6 text-foreground" />
           )}
-        </button> */}
+        </button>
       </nav>
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="border-t border-border bg-background md:hidden">
           <div className="space-y-1 px-4 py-4">
-            {navLinks.map((link) => (
+            {/* {navLinks.map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
@@ -78,6 +149,40 @@ export function Header() {
               </Button>
               <Button className="w-full bg-foreground text-background hover:bg-foreground/90">
                 Get Started
+              </Button>
+            </div> */}
+            <div className="flex items-center justify-between border-t border-border pt-4 mt-4">
+              {/* Mobile Language Selector */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground">
+                    <Globe className="h-4 w-4" />
+                    <span>{currentLanguage.label}</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start">
+                  {languages.map((lang) => (
+                    <DropdownMenuItem
+                      key={lang.code}
+                      onClick={() => switchLocale(lang.code)}
+                      className={locale === lang.code ? "bg-accent/10 text-accent" : ""}
+                    >
+                      {lang.label}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              {/* Mobile Theme Toggle */}
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="text-muted-foreground hover:text-foreground"
+              >
+                <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <span className="sr-only">Toggle theme</span>
               </Button>
             </div>
           </div>

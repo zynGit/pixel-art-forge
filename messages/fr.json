@@ -1,0 +1,74 @@
+{
+  "HeroSection": {
+    "title": "Convertisseur d'image en Pixel Art",
+    "subtitle": "Transformez instantanément vos images en pixel art net. Un générateur professionnel et gratuit avec des palettes avancées."
+  },
+  "BentoGrid": {
+    "selectPalette": "Sélectionner la palette",
+    "none": "Aucune",
+    "active": "Active : ",
+    "quickTip": "Astuce :",
+    "tipContent": "Survolez une palette pour voir son nom et cliquez pour l'appliquer. Utilisez l'interrupteur pour comparer instantanément les couleurs d'origine avec les résultats du générateur pixel art.",
+    "cpuBadge": "Rapide. Local. Précis.",
+    "uploadTitle": "Glissez-déposez ou cliquez pour télécharger",
+    "uploadSubtitle": "Images PNG, JPG, WEBP",
+    "pixelArt": "Pixel Art",
+    "downloadBtn": "Télécharger PNG (HD)",
+    "resolution": "Résolution",
+    "output": "Sortie : ",
+    "taglines": {
+      "retroSprite": "Sprite Rétro",
+      "eightBit": "Classique 8-bit",
+      "indieDetail": "Détail Indie",
+      "photoReal": "Photo Réel"
+    },
+    "enhancements": {
+      "title": "Améliorations",
+      "addOutline": "Ajouter un contour noir",
+      "gridOverlay": "Grille de superposition"
+    },
+    "toasts": {
+      "unsupportedFile": "Fichier non supporté",
+      "unsupportedFileDesc": "Veuillez télécharger un fichier image (PNG, JPG, WEBP).",
+      "noImage": "Aucune image téléchargée",
+      "noImageDesc": "Veuillez télécharger une image avant de télécharger le résultat.",
+      "generating": "Génération d'exportation haute qualité",
+      "creatingScale": "Création de la version à l'échelle {scale}...",
+      "downloadStarted": "Téléchargement démarré",
+      "downloadStartedDesc": "Votre pixel art à l'échelle {scale} a été exporté. Vérifiez votre dossier de téléchargements.",
+      "downloadFailed": "Échec du téléchargement",
+      "downloadFailedDesc": "Une erreur est survenue lors de la génération de l'exportation. Veuillez réessayer.",
+      "conversionFailed": "Échec de la conversion",
+      "conversionFailedDesc": "Nous n'avons pas pu convertir votre image. Veuillez essayer une autre image."
+    }
+  },
+  "FAQSection": {
+    "title": "FAQ sur l'image en Pixel Art",
+    "description": "Vous avez des questions sur notre générateur de pixel art ? Consultez les détails à droite pour des conseils sur la conversion professionnelle et les paramètres de palette.",
+    "items": [
+      {
+        "question": "Qu'est-ce que PixelArtForge ?",
+        "answer": "PixelArtForge est un convertisseur professionnel d'image en pixel art qui transforme instantanément n'importe quelle photo en pixel art net. Ajustez vos résultats avec un contrôle précis de la résolution et des palettes professionnelles sélectionnées pour une esthétique rétro ultime."
+      },
+      {
+        "question": "Comment appliquer des palettes professionnelles à mon pixel art ?",
+        "answer": "À gauche de la zone de téléchargement d'image, vous trouverez le panneau \"Sélectionner la palette\". Cliquez simplement sur n'importe quel préréglage professionnel (comme PICO-8 ou Sunset 8) pour appliquer instantanément des profils de couleurs rétro classiques à votre conversion.\n\nInteraction en temps réel : Survolez n'importe quelle bande de couleur pour révéler le nom de la palette. L'étiquette \"Active\" indiquera quelle palette est actuellement sélectionnée.\n\nContrôle flexible : Utilisez l'interrupteur en haut pour activer ou désactiver l'effet de palette à tout moment. Cela vous permet de comparer facilement les couleurs de l'image d'origine avec les résultats rétro professionnels."
+      },
+      {
+        "question": "Quelles fonctionnalités supplémentaires PixelArtForge offre-t-il en plus de la pixellisation ?",
+        "answer": "PixelArtForge est un convertisseur complet d'image en pixel art doté d'outils d'affinage avancés :\n\n1. Palettes sélectionnées : Appliquez instantanément des ensembles de couleurs emblématiques comme PICO-8 ou Sunset 8 pour obtenir une esthétique rétro authentique.\n\n2. Améliorations de pixels : Ajoutez de la profondeur avec des effets de contour et de trame spécialisés. Ceux-ci sont optimisés pour les images transparentes, ce qui en fait le générateur de pixel art parfait pour créer des sprites de jeu de haute qualité."
+      },
+      {
+        "question": "Combien de temps faut-il pour convertir une image en pixel art ?",
+        "answer": "La conversion est instantanée pour la plupart des images. Comme PixelArtForge utilise un générateur de pixel art basé sur le navigateur haute performance, vos photos sont traitées localement en quelques secondes."
+      },
+      {
+        "question": "Puis-je utiliser le pixel art généré pour des projets commerciaux ?",
+        "answer": "Absolument ! Vous conservez la propriété à 100 % et les droits commerciaux complets pour toutes les œuvres créées avec notre convertisseur. Pour votre sécurité, PixelArtForge traite les images entièrement dans votre navigateur. Vos fichiers originaux ne sont jamais téléchargés sur nos serveurs."
+      }
+    ]
+  },
+  "Footer": {
+    "copyright": "© 2026 PixelArtForge. Créé pour la communauté Pixel Art."
+  }
+}
