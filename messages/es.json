@@ -27,6 +27,13 @@
       "addOutline": "Añadir contorno negro",
       "gridOverlay": "Superposición de cuadrícula"
     },
+    "imageAdjust": {
+      "title": "Ajustar imagen",
+      "resetTitle": "Restablecer ajustes",
+      "brightness": "Brillo",
+      "contrast": "Contraste",
+      "saturation": "Saturación"
+    },
     "toasts": {
       "unsupportedFile": "Archivo no compatible",
       "unsupportedFileDesc": "Por favor, sube un archivo de imagen (PNG, JPG, WEBP).",

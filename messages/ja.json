@@ -1,0 +1,81 @@
+{
+  "HeroSection": {
+    "title": "画像をピクセルアートに変換",
+    "subtitle": "画像を鮮明なピクセルアートに即座に変換。無料のプロ仕様ジェネレーター、厳選パレット付き。"
+  },
+  "BentoGrid": {
+    "selectPalette": "パレットを選択",
+    "none": "なし",
+    "active": "選択中：",
+    "quickTip": "ヒント：",
+    "tipContent": "パレットにマウスを乗せると名前が表示され、クリックで適用できます。トグルで元の写真とピクセルアートの結果を即座に比較できます。",
+    "cpuBadge": "高速・ローカル・精密",
+    "uploadTitle": "ドラッグ＆ドロップまたはクリックでアップロード",
+    "uploadSubtitle": "PNG、JPG、WEBP 画像",
+    "pixelArt": "ピクセルアート",
+    "downloadBtn": "PNG（HD）をダウンロード",
+    "resolution": "解像度",
+    "output": "出力：",
+    "taglines": {
+      "retroSprite": "レトロスプライト",
+      "eightBit": "8ビットクラシック",
+      "indieDetail": "インディーディテール",
+      "photoReal": "フォトリアル"
+    },
+    "enhancements": {
+      "title": "エンハンス",
+      "addOutline": "黒枠を追加",
+      "gridOverlay": "グリッドオーバーレイ"
+    },
+    "imageAdjust": {
+      "title": "画像調整",
+      "resetTitle": "調整をリセット",
+      "brightness": "明るさ",
+      "contrast": "コントラスト",
+      "saturation": "彩度"
+    },
+    "toasts": {
+      "unsupportedFile": "サポートされていないファイル",
+      "unsupportedFileDesc": "画像ファイル（PNG、JPG、WEBP）をアップロードしてください。",
+      "noImage": "画像がアップロードされていません",
+      "noImageDesc": "ダウンロード前に画像をアップロードしてください。",
+      "generating": "高品質エクスポートを生成中",
+      "creatingScale": "{scale} 倍バージョンを作成中…",
+      "downloadStarted": "ダウンロードを開始しました",
+      "downloadStartedDesc": "{scale} 倍のピクセルアートがエクスポートされました。ダウンロードフォルダをご確認ください。",
+      "downloadFailed": "ダウンロードに失敗しました",
+      "downloadFailedDesc": "エクスポートの生成中にエラーが発生しました。もう一度お試しください。",
+      "conversionFailed": "変換に失敗しました",
+      "conversionFailedDesc": "画像を変換できませんでした。別の画像をお試しください。"
+    }
+  },
+  "FAQSection": {
+    "title": "画像をピクセルアートに変換 - よくある質問",
+    "description": "ピクセルアートジェネレーターについてご質問は？右側の詳細でプロの変換とパレット設定のヒントをご確認ください。",
+    "items": [
+      {
+        "question": "PixelArtForge とは？",
+        "answer": "PixelArtForge は、写真を鮮明なピクセルアートに即座に変換するプロ向けツールです。解像度の細かい調整と厳選パレットでレトロな仕上がりを実現します。"
+      },
+      {
+        "question": "ピクセルアートにプロのパレットをどう適用しますか？",
+        "answer": "画像アップロードエリアの左に「パレットを選択」パネルがあります。PICO-8 や Sunset 8 などのプリセットをクリックするだけで、クラシックなレトロ配色を適用できます。\n\nリアルタイム操作：色ストリップにマウスを乗せるとパレット名が表示されます。「選択中」で現在のパレットが分かります。\n\n柔軟な制御：上部のトグルでパレット効果のオン・オフをいつでも切り替えられ、元画像と結果を簡単に比較できます。"
+      },
+      {
+        "question": "PixelArtForge はピクセル化以外にどんな機能がありますか？",
+        "answer": "PixelArtForge は画像→ピクセルアート変換と高度なツールを備えています：\n\n1. 厳選パレット：PICO-8 や Sunset 8 などのアイコニックな配色をワンクリックで適用。\n\n2. ピクセルエンハンス：アウトラインやディザーで立体感を追加。透明画像に最適化されており、ゲームスプライト制作に適しています。"
+      },
+      {
+        "question": "画像の変換にはどのくらいかかりますか？",
+        "answer": "ほとんどの画像は即座に変換されます。PixelArtForge はブラウザ内で動作するため、画像は数秒でローカル処理されます。"
+      },
+      {
+        "question": "生成したピクセルアートは商用利用できますか？",
+        "answer": "はい。当ツールで作成した作品の所有権と商用利用権は100％お客様に帰属します。セキュリティのため、PixelArtForge は画像をすべてブラウザ内で処理し、元ファイルは当方サーバーにアップロードされません。"
+      }
+    ]
+  },
+  "Footer": {
+    "copyright": "© 2026 PixelArtForge. ピクセルアートコミュニティのためにつくられました。"
+  }
+}

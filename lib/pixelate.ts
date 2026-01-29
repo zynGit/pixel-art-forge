@@ -7,6 +7,12 @@ export type PixelateOptions = {
   palette?: string[]
   // add black outline to transparent pixels adjacent to opaque pixels
   addOutline?: boolean
+  // 新增：滤镜选项
+  filters?: {
+    brightness: number // 0-200, 100 is normal
+    contrast: number   // 0-200, 100 is normal
+    saturation: number // 0-200, 100 is normal
+  }
 }
 
 type RGB = { r: number; g: number; b: number }
@@ -123,7 +129,7 @@ function addBlackOutline(data: Uint8ClampedArray, width: number, height: number)
 // Client-side pixelation using Canvas. Returns an object URL of a PNG image.
 // Uses scheme A: slider controls logical grid cells, pixel size is derived from image width.
 export async function pixelateImageFromUrl(src: string, options: PixelateOptions): Promise<string> {
-  const { targetCellsX, scale, palette, addOutline } = options
+  const { targetCellsX, scale, palette, addOutline, filters } = options
 
   return new Promise((resolve, reject) => {
     if (typeof window === "undefined") {
@@ -135,6 +141,26 @@ export async function pixelateImageFromUrl(src: string, options: PixelateOptions
     img.crossOrigin = "anonymous"
     img.onload = () => {
       try {
+        // --- 步骤 1: 滤镜预处理 ---
+        // 我们创建一个临时 Canvas 来应用 CSS 滤镜，这比手动操作 ImageData 像素快得多
+        const filterCanvas = document.createElement("canvas")
+        const filterCtx = filterCanvas.getContext("2d")
+        if (!filterCtx) {
+          reject(new Error("Canvas not supported"))
+          return
+        }
+
+        filterCanvas.width = img.width
+        filterCanvas.height = img.height
+
+        if (filters) {
+          // 应用滤镜字符串，例如: "brightness(120%) contrast(110%) saturate(130%)"
+          filterCtx.filter = `brightness(${filters.brightness}%) contrast(${filters.contrast}%) saturate(${filters.saturation}%)`
+        }
+        
+        filterCtx.drawImage(img, 0, 0)
+
+        // --- 步骤 2: 像素化逻辑 (使用处理后的 filterCanvas 代替原图 img) ---
         const baseCanvas = document.createElement("canvas")
         const baseCtx = baseCanvas.getContext("2d")
         if (!baseCtx) {
@@ -142,23 +168,23 @@ export async function pixelateImageFromUrl(src: string, options: PixelateOptions
           return
         }
 
-        // Clamp target cells to a reasonable range
         const clampedCellsX = Math.max(4, Math.min(256, Math.floor(targetCellsX || 64)))
-
-        // Derive pixel block size based on image width
         const rawPixelSize = Math.floor(img.width / clampedCellsX)
         const pixel = Math.max(2, Math.min(64, rawPixelSize || 8))
 
-        // Downscale: draw the image very small
         const smallWidth = Math.max(1, Math.round(img.width / pixel))
         const smallHeight = Math.max(1, Math.round(img.height / pixel))
+        
         baseCanvas.width = smallWidth
         baseCanvas.height = smallHeight
+        
         baseCtx.imageSmoothingEnabled = false
         baseCtx.clearRect(0, 0, smallWidth, smallHeight)
-        baseCtx.drawImage(img, 0, 0, smallWidth, smallHeight)
+        
+        // 关键点：从 filterCanvas 绘入，实现“带滤镜的像素化”
+        baseCtx.drawImage(filterCanvas, 0, 0, smallWidth, smallHeight)
 
-        // Optional palette mapping on the downscaled image for performance
+        // --- 步骤 3: 调色盘与轮廓 (逻辑保持不变) ---
         let imageData: ImageData | null = null
         if (palette && palette.length > 0) {
           const paletteRgb: RGB[] = []
@@ -173,7 +199,6 @@ export async function pixelateImageFromUrl(src: string, options: PixelateOptions
           }
         }
 
-        // Optional black outline on transparent pixels adjacent to opaque pixels
         if (addOutline) {
           if (!imageData) {
             imageData = baseCtx.getImageData(0, 0, smallWidth, smallHeight)
@@ -182,7 +207,7 @@ export async function pixelateImageFromUrl(src: string, options: PixelateOptions
           baseCtx.putImageData(imageData, 0, 0)
         }
 
-        // Upscale: draw the small image back up with no smoothing
+        // --- 步骤 4: 最终缩放导出 ---
         const outCanvas = document.createElement("canvas")
         const outCtx = outCanvas.getContext("2d")
         if (!outCtx) {

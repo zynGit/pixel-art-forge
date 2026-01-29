@@ -27,6 +27,13 @@
       "addOutline": "Ajouter un contour noir",
       "gridOverlay": "Grille de superposition"
     },
+    "imageAdjust": {
+      "title": "Ajuster l'image",
+      "resetTitle": "Réinitialiser les réglages",
+      "brightness": "Luminosité",
+      "contrast": "Contraste",
+      "saturation": "Saturation"
+    },
     "toasts": {
       "unsupportedFile": "Fichier non supporté",
       "unsupportedFileDesc": "Veuillez télécharger un fichier image (PNG, JPG, WEBP).",

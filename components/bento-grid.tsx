@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useState } from "react"
-import { Upload, Check, ArrowRight, Download, Twitter, Cpu } from "lucide-react"
+import { Upload, Check, ArrowRight, Download, Twitter, Cpu,RotateCcw } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
@@ -15,7 +15,9 @@ import {
 } from "@/components/ui/select"
 import { useToast } from "@/hooks/use-toast"
 import { pixelateImageFromUrl } from "@/lib/pixelate"
+// import { pixelateImageFromUrl } from "@/lib/pixelate-dithering"
 import { useTranslations } from "next-intl"
+import { debounce } from '@/lib/utils'
 
 const palettes = [
   {name: "PICO_8", colors: [
@@ -24,13 +26,14 @@ const palettes = [
     "#FF004D", "#FFA300", "#FFEC27", "#00E436", 
     "#29ADFF", "#83769C", "#FF77A8", "#FFCCAA"
   ]},
-  { name: "Gameboy", colors: ["#0f380f", "#306230", "#8bac0f", "#9bbc0f"] },
   {name: "LOST_CENTURY", colors: [
-    "#1a1c2c", "#5d275d", "#b13e53", "#ef7d57", 
-    "#ffcd75", "#a7f070", "#38b764", "#257179", 
-    "#29366f", "#3b5dc9", "#41a6f6", "#73eff7", 
-    "#f4f4f4", "#94b0c2", "#566c86", "#333c57"
+    "#d1b187", "#c77b58", "#ae5d40", "#79444a", 
+    "#4b3d44", "#ba9158", "#927441", "#4d4539", 
+    "#77743b", "#b3a555", "#d2c9a5", "#8caba1", 
+    "#4b726e", "#574852", "#847875", "#ab9b8e"
   ]},
+  { name: "SUNSET_8", colors: ["#FFF474", "#F3B05A", "#F4874B", "#F06553", "#A3586D", "#5C4A72", "#3C3B5F", "#3C3B5F"]},
+  { name: "Gameboy", colors: ["#0f380f", "#306230", "#8bac0f", "#9bbc0f"] },
   {name: "TWILIGHT_5", colors: ["#140c1c", "#442434", "#30346d", "#597dce", "#d27d2c"]},
   { name: "Retro NES", colors: ["#000000", "#fcfcfc", "#f83800", "#7c7c7c"] },
   { name: "Cyberpunk", colors: ["#0d0221", "#ff00ff", "#00ffff", "#ffff00"] },
@@ -40,21 +43,7 @@ const palettes = [
   { name: "Forest", colors: ["#1b4332", "#2d6a4f", "#52b788", "#95d5b2"] },
   { name: "Candy", colors: ["#ff0a54", "#ff477e", "#ff85a1", "#fbb1bd"] },
   
-  {
-    name: "SUNSET_8", colors: ["#000000", "#1D2B53", "#7E2553", "#AB5236", "#FF004D", "#FFA300", "#FFEC27", "#FFF1E8"]},
-  
 ]
-
-const GRID_PRESETS = [
-  { value: 16, label: "16", tagline: "Retro Sprite" },
-  { value: 32, label: "32", tagline: "8-bit Classic" },
-  { value: 48, label: "48", tagline: "" },
-  { value: 64, label: "64", tagline: "Indie Detail" },
-  { value: 80, label: "80", tagline: "" },
-  { value: 96, label: "96", tagline: "" },
-  { value: 128, label: "128", tagline: "Photo Real" },
-  { value: 144, label: "144", tagline: "Photo Real" },
-] as const
 
 const pixelArtIdeas = [
   { id: 1, title: "Cyberpunk City", category: "Landscape" },
@@ -83,6 +72,12 @@ export function BentoGrid() {
 
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const { toast } = useToast()
+  // 新增：图像处理参数状态
+  const [filters, setFilters] = useState({
+    brightness: 100,
+    contrast: 100,
+    saturation: 100,
+  })
   
   const GRID_PRESETS = [
     { value: 16, label: "16", tagline: t("taglines.retroSprite") },
@@ -154,6 +149,7 @@ export function BentoGrid() {
     presetIndex?: number,
     paletteIndex?: number,
     addOutlineOverride?: boolean,
+    currentFilters = filters // 传入当前滤镜
   ) => {
     try {
       const index =
@@ -190,6 +186,7 @@ export function BentoGrid() {
         scale,
         palette: activePalette,
         addOutline: shouldAddOutline,
+        filters: currentFilters, // 传递滤镜参数
       })
       setPixelUrl(url)
 
@@ -206,6 +203,48 @@ export function BentoGrid() {
       })
     }
   }
+  // 1. 引入 useRef 来记录最新的转换请求 ID
+const processingId = useRef(0);
+
+// 2. 编写一个带有防抖功能的处理函数
+const debouncedConvert = useRef(
+  debounce(async (params) => {
+    const currentId = ++processingId.current;
+    
+    try {
+      const url = await pixelateImageFromUrl(params.url, params.options);
+      
+      // 检查这是否仍然是最新的请求，防止竞态条件
+      if (currentId === processingId.current) {
+        // 只有在确认要替换新图时，才延迟撤销旧图
+        // 不要立即执行 revoke，或者保留一个旧 URL 队列
+        setPixelUrl(url);
+      } else {
+        URL.revokeObjectURL(url); // 如果不是最新的，直接销毁
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, 50) // 50ms 的防抖，平衡灵敏度与性能
+).current;
+  // 3. 滤镜变更处理函数
+  const handleFilterChange = (key: keyof typeof filters, value: number[]) => {
+    const newFilters = { ...filters, [key]: value[0] };
+    setFilters(newFilters);
+    
+    if (originalUrl) {
+      debouncedConvert({
+        url: originalUrl,
+        options: {
+          targetCellsX: GRID_PRESETS[resolutionIndex].value,
+          scale: 1,
+          palette: paletteEnabled && selectedPalette >= 0 ? palettes[selectedPalette].colors : [],
+          addOutline: enhancements.addOutline,
+          filters: newFilters,
+        }
+      });
+    }
+  };
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -241,72 +280,39 @@ export function BentoGrid() {
   }
 
   const handleDownload = async () => {
-    if (!originalUrl) {
-      toast({
-        title: t("toasts.noImage"),
-        description: t("toasts.noImageDesc"),
-        variant: "destructive",
-      })
-      return
-    }
-
+    if (!originalUrl) return;
+  
     try {
-      // Show loading toast
-      toast({
-        title: t("toasts.generating"),
-        description: t("toasts.creatingScale", { scale: exportScale }),
-      })
-
-      // Get current settings
-      const targetCellsX = GRID_PRESETS[resolutionIndex].value
-      const scale = getScaleFromExport()
-      const activePalette =
-        paletteEnabled && selectedPalette >= 0 && selectedPalette < palettes.length
-          ? palettes[selectedPalette].colors
-          : []
-
-      // Generate high-quality pixelated image with export scale
+      toast({ title: t("toasts.generating") });
+  
+      const scale = getScaleFromExport();
+      // 注意：这里我们只传 scale 变量，pixelate.ts 内部会自动处理基础放大
       const exportUrl = await pixelateImageFromUrl(originalUrl, {
-        targetCellsX,
+        targetCellsX: GRID_PRESETS[resolutionIndex].value,
         scale,
-        palette: activePalette,
+        palette: paletteEnabled && selectedPalette >= 0 ? palettes[selectedPalette].colors : [],
         addOutline: enhancements.addOutline,
-      })
-
-      // Generate filename: PixelArtForge-{paletteName}-{timestamp}.png
-      const paletteName =
-        selectedPalette >= 0 && selectedPalette < palettes.length
-          ? palettes[selectedPalette].name.toLowerCase().replace(/\s+/g, "-")
-          : "default"
-      const timestamp = Date.now()
-      const filename = `PixelArtForge-${paletteName}-${timestamp}.png`
-
-      // Create download link
-      const link = document.createElement("a")
-      link.href = exportUrl
-      link.download = filename
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-
-      // Revoke the export URL after download
-      setTimeout(() => {
-        URL.revokeObjectURL(exportUrl)
-      }, 100)
-
-      toast({
-        title: t("toasts.downloadStarted"),
-        description: t("toasts.downloadStartedDesc", { scale: exportScale }),
-      })
+      });
+  
+      const link = document.createElement("a");
+      link.href = exportUrl;
+      link.download = `PixelArtForge-${Date.now()}.png`;
+      link.click();
+  
+      // 提示：不需要立刻 revoke，让浏览器完成下载过程
+      toast({ title: t("toasts.downloadStarted") });
     } catch (error) {
-      console.error(error)
-      toast({
-        title: t("toasts.downloadFailed"),
-        description: t("toasts.downloadFailedDesc"),
-        variant: "destructive",
-      })
+      console.error(error);
     }
-  }
+  };
+
+  const handleResetFilters = () => {
+    const defaultFilters = { brightness: 100, contrast: 100, saturation: 100 };
+    setFilters(defaultFilters);
+    if (originalUrl) {
+      convertToPixelArt(originalUrl, undefined, undefined, undefined, defaultFilters)
+    }
+  };
 
   const handleShare = () => {
     toast({
@@ -478,7 +484,8 @@ export function BentoGrid() {
                     <img
                       src={pixelUrl}
                       alt="Pixel art"
-                      className="block"
+                      className="w-full h-auto max-w-full"
+                      style={{ imageRendering: 'pixelated' }} // 关键：保持像素硬边缘
                     />
                   ) : (
                     <span className="text-xs text-accent">{t("pixelArt")}</span>
@@ -598,6 +605,76 @@ export function BentoGrid() {
                     onCheckedChange={(checked) =>
                       setEnhancements((prev) => ({ ...prev, gridOverlay: checked }))
                     }
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="group relative overflow-hidden rounded-2xl border border-border bg-card/80 p-5 transition-all duration-300 hover:border-accent/50 md:col-span-1">
+            <div className="relative">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-2">
+                  <h3 className="text-sm font-semibold text-foreground">{t("imageAdjust.title")}</h3>
+                </div>
+                {/* 新增重置按钮 */}
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-6 w-6 text-muted-foreground hover:text-accent"
+                  onClick={handleResetFilters}
+                  title={t("imageAdjust.resetTitle")}
+                  disabled={!originalUrl} // 没图片时禁用
+                >
+                  <RotateCcw className="h-3.5 w-3.5" />
+                </Button>
+              </div>
+              <div className="space-y-6">
+                {/* Brightness */}
+                <div className="space-y-2">
+                  <div className="flex justify-between text-[10px] uppercase tracking-wider text-muted-foreground">
+                    <span>{t("imageAdjust.brightness")}</span>
+                    <span className="text-accent">{filters.brightness}%</span>
+                  </div>
+                  <Slider
+                    disabled={!originalUrl}
+                    value={[filters.brightness]}
+                    min={0}
+                    max={200}
+                    step={1}
+                    onValueChange={(v) => handleFilterChange('brightness', v)}
+                  />
+                </div>
+
+                {/* Contrast */}
+                <div className="space-y-2">
+                  <div className="flex justify-between text-[10px] uppercase tracking-wider text-muted-foreground">
+                    <span>{t("imageAdjust.contrast")}</span>
+                    <span className="text-accent">{filters.contrast}%</span>
+                  </div>
+                  <Slider
+                    disabled={!originalUrl}
+                    value={[filters.contrast]}
+                    min={0}
+                    max={200}
+                    step={1}
+                    onValueChange={(v) => handleFilterChange('contrast', v)}
+                  />
+                </div>
+
+                {/* Saturation */}
+                <div className="space-y-2">
+                  <div className="flex justify-between text-[10px] uppercase tracking-wider text-muted-foreground">
+                    <span>{t("imageAdjust.saturation")}</span>
+                    <span className="text-accent">{filters.saturation}%</span>
+                  </div>
+                  <Slider
+                    disabled={!originalUrl}
+                    value={[filters.saturation]}
+                    min={0}
+                    max={200}
+                    step={1}
+                    onValueChange={(v) => handleFilterChange('saturation', v)}
                   />
                 </div>
               </div>

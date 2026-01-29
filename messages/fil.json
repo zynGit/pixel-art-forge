@@ -27,6 +27,13 @@
       "addOutline": "Magdagdag ng Black Outline",
       "gridOverlay": "Grid Overlay"
     },
+    "imageAdjust": {
+      "title": "Ayusin ang Larawan",
+      "resetTitle": "I-reset ang mga Ayos",
+      "brightness": "Liwanag",
+      "contrast": "Kontrast",
+      "saturation": "Saturation"
+    },
     "toasts": {
       "unsupportedFile": "Hindi suportadong file",
       "unsupportedFileDesc": "Mangyaring mag-upload ng image file (PNG, JPG, WEBP).",

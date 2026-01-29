@@ -27,6 +27,13 @@
       "addOutline": "Add Black Outline",
       "gridOverlay": "Grid Overlay"
     },
+    "imageAdjust": {
+      "title": "Image Adjust",
+      "resetTitle": "Reset Adjustments",
+      "brightness": "Brightness",
+      "contrast": "Contrast",
+      "saturation": "Saturation"
+    },
     "toasts": {
       "unsupportedFile": "Unsupported file",
       "unsupportedFileDesc": "Please upload an image file (PNG, JPG, WEBP).",

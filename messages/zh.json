@@ -1,0 +1,81 @@
+{
+  "HeroSection": {
+    "title": "图片转像素画工具",
+    "subtitle": "一键将图片转为清晰像素画。免费专业生成器，内置精选调色板。"
+  },
+  "BentoGrid": {
+    "selectPalette": "选择调色板",
+    "none": "无",
+    "active": "当前：",
+    "quickTip": "小提示：",
+    "tipContent": "将鼠标悬停在任意调色板上可查看名称，点击即可应用。可使用顶部开关即时对比原图与像素画效果。",
+    "cpuBadge": "快速 · 本地 · 精准",
+    "uploadTitle": "拖放或点击上传",
+    "uploadSubtitle": "支持 PNG、JPG、WEBP 图片",
+    "pixelArt": "像素画",
+    "downloadBtn": "下载 PNG（高清）",
+    "resolution": "分辨率",
+    "output": "输出：",
+    "taglines": {
+      "retroSprite": "复古精灵",
+      "eightBit": "8 位经典",
+      "indieDetail": "独立细节",
+      "photoReal": "写实风格"
+    },
+    "enhancements": {
+      "title": "增强",
+      "addOutline": "添加黑色描边",
+      "gridOverlay": "网格叠加"
+    },
+    "imageAdjust": {
+      "title": "图像调整",
+      "resetTitle": "重置调整",
+      "brightness": "亮度",
+      "contrast": "对比度",
+      "saturation": "饱和度"
+    },
+    "toasts": {
+      "unsupportedFile": "不支持的文件",
+      "unsupportedFileDesc": "请上传图片文件（PNG、JPG、WEBP）。",
+      "noImage": "未上传图片",
+      "noImageDesc": "请先上传图片再下载。",
+      "generating": "正在生成高清导出",
+      "creatingScale": "正在创建 {scale} 倍版本…",
+      "downloadStarted": "已开始下载",
+      "downloadStartedDesc": "您的 {scale} 倍像素画已导出，请查看下载文件夹。",
+      "downloadFailed": "下载失败",
+      "downloadFailedDesc": "生成导出时出错，请重试。",
+      "conversionFailed": "转换失败",
+      "conversionFailedDesc": "无法转换该图片，请换一张试试。"
+    }
+  },
+  "FAQSection": {
+    "title": "图片转像素画 常见问题",
+    "description": "对我们的像素画生成器有疑问？查看右侧详情，了解专业转换与调色板设置技巧。",
+    "items": [
+      {
+        "question": "什么是 PixelArtForge？",
+        "answer": "PixelArtForge 是一款专业的图片转像素画工具，可即时将任意照片转为清晰像素画。通过精确分辨率控制与精选调色板，打造复古风格效果。"
+      },
+      {
+        "question": "如何为像素画应用专业调色板？",
+        "answer": "在图片上传区域左侧可找到「选择调色板」面板。点击任意预设（如 PICO-8 或 Sunset 8）即可为转换应用经典复古配色。\n\n实时交互：将鼠标悬停在色条上可显示调色板名称，「当前」标签会显示当前选中的调色板。\n\n灵活控制：使用顶部开关可随时开启或关闭调色板效果，方便对比原图与像素画效果。"
+      },
+      {
+        "question": "PixelArtForge 除像素化外还有哪些功能？",
+        "answer": "PixelArtForge 提供完整的图片转像素画与进阶工具：\n\n1. 精选调色板：一键应用 PICO-8、Sunset 8 等经典配色。\n\n2. 像素增强：通过描边与抖动等效果增加层次，适合透明图与游戏精灵。"
+      },
+      {
+        "question": "转换一张图片需要多久？",
+        "answer": "大多数图片可即时完成转换。PixelArtForge 在浏览器本地运行，照片在几秒内即可处理完成。"
+      },
+      {
+        "question": "生成的像素画可用于商业项目吗？",
+        "answer": "可以。您对使用本工具创作的作品拥有 100% 所有权及完整商业使用权。为保障隐私，PixelArtForge 完全在浏览器内处理图片，原始文件不会上传到我们的服务器。"
+      }
+    ]
+  },
+  "Footer": {
+    "copyright": "© 2026 PixelArtForge。为像素画社区打造。"
+  }
+}

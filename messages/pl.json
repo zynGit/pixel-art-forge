@@ -27,6 +27,13 @@
       "addOutline": "Dodaj czarny kontur",
       "gridOverlay": "Nakładka siatki"
     },
+    "imageAdjust": {
+      "title": "Regulacja obrazu",
+      "resetTitle": "Resetuj ustawienia",
+      "brightness": "Jasność",
+      "contrast": "Kontrast",
+      "saturation": "Nasycenie"
+    },
     "toasts": {
       "unsupportedFile": "Nieobsługiwany plik",
       "unsupportedFileDesc": "Prześlij plik obrazu (PNG, JPG, WEBP).",
