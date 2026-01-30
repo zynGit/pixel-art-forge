@@ -168,20 +168,28 @@ export async function pixelateImageFromUrl(src: string, options: PixelateOptions
           return
         }
 
-        const clampedCellsX = Math.max(4, Math.min(256, Math.floor(targetCellsX || 64)))
-        const rawPixelSize = Math.floor(img.width / clampedCellsX)
-        const pixel = Math.max(2, Math.min(64, rawPixelSize || 8))
+        const isOriginalResolution = targetCellsX <= 0
+        let smallWidth: number
+        let smallHeight: number
+        let pixel: number
 
-        const smallWidth = Math.max(1, Math.round(img.width / pixel))
-        const smallHeight = Math.max(1, Math.round(img.height / pixel))
-        
+        if (isOriginalResolution) {
+          smallWidth = img.width
+          smallHeight = img.height
+          pixel = 1
+        } else {
+          const clampedCellsX = Math.max(4, Math.min(256, Math.floor(targetCellsX || 64)))
+          const rawPixelSize = Math.floor(img.width / clampedCellsX)
+          pixel = Math.max(2, Math.min(64, rawPixelSize || 8))
+          smallWidth = Math.max(1, Math.round(img.width / pixel))
+          smallHeight = Math.max(1, Math.round(img.height / pixel))
+        }
+
         baseCanvas.width = smallWidth
         baseCanvas.height = smallHeight
-        
+
         baseCtx.imageSmoothingEnabled = false
         baseCtx.clearRect(0, 0, smallWidth, smallHeight)
-        
-        // 关键点：从 filterCanvas 绘入，实现“带滤镜的像素化”
         baseCtx.drawImage(filterCanvas, 0, 0, smallWidth, smallHeight)
 
         // --- 步骤 3: 调色盘与轮廓 (逻辑保持不变) ---

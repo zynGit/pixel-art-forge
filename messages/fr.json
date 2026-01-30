@@ -8,28 +8,36 @@
     "none": "Aucune",
     "active": "Active : ",
     "quickTip": "Astuce :",
-    "tipContent": "Survolez une palette pour voir son nom et cliquez pour l'appliquer. Utilisez l'interrupteur pour comparer instantanément les couleurs d'origine avec les résultats du générateur pixel art.",
+    "tipContent": "Chaque palette affiche son nom en dessous ; cliquez pour l'appliquer. Utilisez l'interrupteur pour comparer instantanément les couleurs d'origine avec les résultats du générateur pixel art.",
     "cpuBadge": "Rapide. Local. Précis.",
     "uploadTitle": "Glissez-déposez ou cliquez pour télécharger",
     "uploadSubtitle": "Images PNG, JPG, WEBP",
     "pixelArt": "Pixel Art",
+    "originalImage": "Image originale",
     "downloadBtn": "Télécharger PNG (HD)",
     "resolution": "Résolution",
+    "pixelationEnabled": "Pixellisation",
     "output": "Sortie : ",
+    "outputOriginal": "Original",
+    "resolutionTipContent": "Plus la valeur est basse, plus les pixels sont épais et rétro ; plus elle est haute, plus il y a de détails. Glissez le curseur ou cliquez sur un nombre pour changer.\n\nS'applique quand Pixellisation est activée ; désactivez-la pour obtenir l'image d'origine.",
     "taglines": {
       "retroSprite": "Sprite Rétro",
       "eightBit": "Classique 8-bit",
       "indieDetail": "Détail Indie",
-      "photoReal": "Photo Réel"
+      "photoReal": "Photo Réel",
+      "highRes": "Haute résolution",
+      "ultraDetail": "Ultra détail"
     },
     "enhancements": {
       "title": "Améliorations",
       "addOutline": "Ajouter un contour noir",
+      "addOutlineHint": "S'applique uniquement aux images avec transparence.",
       "gridOverlay": "Grille de superposition"
     },
     "imageAdjust": {
       "title": "Ajuster l'image",
       "resetTitle": "Réinitialiser les réglages",
+      "reset": "Réinitialiser",
       "brightness": "Luminosité",
       "contrast": "Contraste",
       "saturation": "Saturation"
@@ -59,11 +67,11 @@
       },
       {
         "question": "Comment appliquer des palettes professionnelles à mon pixel art ?",
-        "answer": "À gauche de la zone de téléchargement d'image, vous trouverez le panneau \"Sélectionner la palette\". Cliquez simplement sur n'importe quel préréglage professionnel (comme PICO-8 ou Sunset 8) pour appliquer instantanément des profils de couleurs rétro classiques à votre conversion.\n\nInteraction en temps réel : Survolez n'importe quelle bande de couleur pour révéler le nom de la palette. L'étiquette \"Active\" indiquera quelle palette est actuellement sélectionnée.\n\nContrôle flexible : Utilisez l'interrupteur en haut pour activer ou désactiver l'effet de palette à tout moment. Cela vous permet de comparer facilement les couleurs de l'image d'origine avec les résultats rétro professionnels."
+        "answer": "À gauche de la zone de téléchargement d'image, vous trouverez le panneau \"Sélectionner la palette\". Cliquez simplement sur n'importe quel préréglage professionnel (comme PICO-8 ou Sunset 8) pour appliquer instantanément des profils de couleurs rétro classiques à votre conversion. Le nom de chaque palette s'affiche en dessous ; l'étiquette \"Active\" indique la palette sélectionnée. Utilisez l'interrupteur en haut pour activer ou désactiver l'effet de palette et comparer les couleurs d'origine aux résultats rétro."
       },
       {
         "question": "Quelles fonctionnalités supplémentaires PixelArtForge offre-t-il en plus de la pixellisation ?",
-        "answer": "PixelArtForge est un convertisseur complet d'image en pixel art doté d'outils d'affinage avancés :\n\n1. Palettes sélectionnées : Appliquez instantanément des ensembles de couleurs emblématiques comme PICO-8 ou Sunset 8 pour obtenir une esthétique rétro authentique.\n\n2. Améliorations de pixels : Ajoutez de la profondeur avec des effets de contour et de trame spécialisés. Ceux-ci sont optimisés pour les images transparentes, ce qui en fait le générateur de pixel art parfait pour créer des sprites de jeu de haute qualité."
+        "answer": "PixelArtForge est un convertisseur complet d'image en pixel art doté d'outils d'affinage avancés :\n\n1. Palettes sélectionnées : Appliquez instantanément des ensembles de couleurs emblématiques comme PICO-8 ou Sunset 8 pour obtenir une esthétique rétro authentique.\n\n2. Ajustement d'image : Ajustez luminosité, contraste et saturation avant ou après la pixellisation.\n\n3. Améliorations de pixels : Ajoutez de la profondeur avec des effets de contour et de trame spécialisés. Ceux-ci sont optimisés pour les images transparentes, ce qui en fait le générateur de pixel art parfait pour créer des sprites de jeu de haute qualité."
       },
       {
         "question": "Combien de temps faut-il pour convertir une image en pixel art ?",
@@ -74,6 +82,24 @@
         "answer": "Absolument ! Vous conservez la propriété à 100 % et les droits commerciaux complets pour toutes les œuvres créées avec notre convertisseur. Pour votre sécurité, PixelArtForge traite les images entièrement dans votre navigateur. Vos fichiers originaux ne sont jamais téléchargés sur nos serveurs."
       }
     ]
+  },
+  "SEOContent": {
+    "title": "Le meilleur convertisseur et générateur gratuit d'image en Pixel Art",
+    "description": "Transformez vos photos en pixel art authentique. Palettes pro comme PICO-8 incluses. 100% privé : aucune image n'est téléchargée sur nos serveurs. Sans inscription.",
+    "columns": {
+      "imageToPixelArt": {
+        "title": "Convertisseur Authentique d'Image en Pixel Art",
+        "description": "Transformez instantanément vos PNG, JPG ou WEBP en pixel art de haute qualité. Contrairement aux générateurs IA flous, notre algorithme verrouille le nombre exact de pixels pour des bordes nets."
+      },
+      "gameDevTool": {
+        "title": "Générateur de Sprites pour Développeurs Indie",
+        "description": "Conçu pour les créateurs, supportant des résolutions fixes de 16px à 144px. Exportez vos assets avec un agrandissement sans perte jusqu'à 8x, garantissant des sprites parfaits pour tout moteur de jeu."
+      },
+      "pixelArtMaker": {
+        "title": "Outil Pixel Privé basé sur le Navigateur",
+        "description": "Utilisez des palettes pro comme PICO-8 et Gameboy sans latence. Tout le traitement est local : vos images ne sont jamais téléchargées sur un serveur, assurant une confidentialité totale."
+      }
+    }
   },
   "Footer": {
     "copyright": "© 2026 PixelArtForge. Créé pour la communauté Pixel Art."

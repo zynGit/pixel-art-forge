@@ -7,47 +7,66 @@ import { GoogleAnalytics } from "@next/third-parties/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { NextIntlClientProvider } from "next-intl"
 import { notFound } from "next/navigation"
-import { locales } from "../../i18n"
+import { locales, defaultLocale } from "../../i18n"
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
-export const metadata: Metadata = {
-  title: "Image to Pixel Art Converter | PixelArtForge",
-  description:
-    "Free online pixel art converter. Instantly turn images into pixel art with pro palettes like PICO-8 & Sunset 8. 100% private, fast, and easy.",
-  authors: [{ name: "PixelArtForge Team" }],
-  alternates: {
-    canonical: "https://www.pixel-art.online/",
-  },
-  metadataBase: new URL("https://www.pixel-art.online/"),
-  openGraph: {
+const baseUrl = "https://www.pixel-art.online"
+
+function getLocaleUrl(locale: string) {
+  return locale === defaultLocale ? `${baseUrl}/` : `${baseUrl}/${locale}`
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const canonical = getLocaleUrl(locale)
+  const languages: Record<string, string> = {}
+  for (const loc of locales) {
+    languages[loc] = getLocaleUrl(loc)
+  }
+  return {
     title: "Image to Pixel Art Converter | PixelArtForge",
     description:
       "Free online pixel art converter. Instantly turn images into pixel art with pro palettes like PICO-8 & Sunset 8. 100% private, fast, and easy.",
-    url: "https://www.pixel-art.online/",
-    siteName: "PixelArtForge",
-    images: [
-      {
-        url: "/og-image.JPG",
-        width: 1200,
-        height: 917,
-        alt: "PixelArtForge - Image to Pixel Art Converter",
-      },
-    ],
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Image to Pixel Art Converter | PixelArtForge",
-    description:
-      "Free online pixel art converter. Instantly turn images into pixel art with pro palettes like PICO-8 & Sunset 8. 100% private, fast, and easy.",
-    images: ["/og-image.JPG"],
-  },
-  icons: {
-    icon: "/icon.png",
-    apple: "/icon.png",
-  },
+    authors: [{ name: "PixelArtForge Team" }],
+    alternates: {
+      canonical,
+      languages,
+    },
+    metadataBase: new URL(baseUrl),
+    openGraph: {
+      title: "Image to Pixel Art Converter | PixelArtForge",
+      description:
+        "Free online pixel art converter. Instantly turn images into pixel art with pro palettes like PICO-8 & Sunset 8. 100% private, fast, and easy.",
+      url: canonical,
+      siteName: "PixelArtForge",
+      images: [
+        {
+          url: "/og-image.JPG",
+          width: 1200,
+          height: 917,
+          alt: "PixelArtForge - Image to Pixel Art Converter",
+        },
+      ],
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Image to Pixel Art Converter | PixelArtForge",
+      description:
+        "Free online pixel art converter. Instantly turn images into pixel art with pro palettes like PICO-8 & Sunset 8. 100% private, fast, and easy.",
+      images: ["/og-image.JPG"],
+    },
+    icons: {
+      icon: "/icon.png",
+      apple: "/icon.png",
+    },
+  }
 }
 
 async function getMessages(locale: string) {
@@ -84,7 +103,7 @@ export default async function RootLayout({
       <body className={`font-sans antialiased`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="light"
           enableSystem={false}
           disableTransitionOnChange
         >

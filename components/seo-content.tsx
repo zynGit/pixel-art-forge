@@ -1,43 +1,33 @@
-import { Lightbulb, Gamepad2, Brain } from "lucide-react"
+"use client"
 
-const seoColumns = [
-  {
-    icon: Lightbulb,
-    title: "Pixel Art Ideas",
-    description:
-      "Stuck on what to create? Our AI provides endless Pixel Art Ideas for characters, landscapes, and game assets.",
-  },
-  {
-    icon: Gamepad2,
-    title: "Game Dev Tool",
-    description:
-      "Perfect for indie developers. Generate Game Sprites and Minecraft Patterns in seconds.",
-  },
-  {
-    icon: Brain,
-    title: "How it Works",
-    description:
-      "Using advanced Neural Networks to analyze edges and map colors to professional palettes like Pico-8 and NES.",
-  },
-]
+import { Image, Gamepad2, Paintbrush } from "lucide-react"
+import { useTranslations } from "next-intl"
+
+const columnKeys = [
+  { key: "imageToPixelArt", icon: Image },
+  { key: "gameDevTool", icon: Gamepad2 },
+  { key: "pixelArtMaker", icon: Paintbrush },
+] as const
 
 export function SEOContent() {
+  const t = useTranslations("SEOContent")
+
   return (
     <section className="py-10 sm:py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-balance text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            AI Pixel Art Generator: Transform Photos into 8-Bit Masterpieces
+            {t("title")}
           </h2>
           <p className="mt-4 text-pretty text-lg text-muted-foreground">
-            Harness the power of artificial intelligence to create stunning retro-style pixel art from any image
+            {t("description")}
           </p>
         </div>
 
         <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {seoColumns.map((column) => (
+          {columnKeys.map(({ key, icon: Icon }) => (
             <div
-              key={column.title}
+              key={key}
               className="group relative rounded-2xl border border-border bg-card/50 p-8 transition-all duration-300 hover:border-accent/50 hover:bg-card/80"
             >
               <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -45,13 +35,13 @@ export function SEOContent() {
               </div>
               <div className="relative">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10 transition-colors group-hover:bg-accent/20">
-                  <column.icon className="h-6 w-6 text-accent" />
+                  <Icon className="h-6 w-6 text-accent" />
                 </div>
                 <h3 className="mt-6 text-lg font-semibold text-foreground">
-                  {column.title}
+                  {t(`columns.${key}.title`)}
                 </h3>
                 <p className="mt-3 text-muted-foreground leading-relaxed">
-                  {column.description}
+                  {t(`columns.${key}.description`)}
                 </p>
               </div>
             </div>

@@ -8,28 +8,36 @@
     "none": "无",
     "active": "当前：",
     "quickTip": "小提示：",
-    "tipContent": "将鼠标悬停在任意调色板上可查看名称，点击即可应用。可使用顶部开关即时对比原图与像素画效果。",
+    "tipContent": "每个色板下方显示名称，点击即可应用。可使用顶部开关即时对比原图与像素画效果。",
     "cpuBadge": "快速 · 本地 · 精准",
     "uploadTitle": "拖放或点击上传",
     "uploadSubtitle": "支持 PNG、JPG、WEBP 图片",
     "pixelArt": "像素画",
+    "originalImage": "原图",
     "downloadBtn": "下载 PNG（高清）",
     "resolution": "分辨率",
+    "pixelationEnabled": "像素化",
     "output": "输出：",
+    "outputOriginal": "原图",
+    "resolutionTipContent": "数值越小颗粒越粗、复古感越强；数值越大细节越多。可拖动滑块或直接点击下方数字切换。\n\n开启「像素化」时生效；关闭则输出原图。",
     "taglines": {
       "retroSprite": "复古精灵",
       "eightBit": "8 位经典",
       "indieDetail": "独立细节",
-      "photoReal": "写实风格"
+      "photoReal": "写实风格",
+      "highRes": "高分辨率",
+      "ultraDetail": "超高细节"
     },
     "enhancements": {
       "title": "增强",
       "addOutline": "添加黑色描边",
+      "addOutlineHint": "仅适用于透明背景图片。",
       "gridOverlay": "网格叠加"
     },
     "imageAdjust": {
       "title": "图像调整",
       "resetTitle": "重置调整",
+      "reset": "重置",
       "brightness": "亮度",
       "contrast": "对比度",
       "saturation": "饱和度"
@@ -59,11 +67,11 @@
       },
       {
         "question": "如何为像素画应用专业调色板？",
-        "answer": "在图片上传区域左侧可找到「选择调色板」面板。点击任意预设（如 PICO-8 或 Sunset 8）即可为转换应用经典复古配色。\n\n实时交互：将鼠标悬停在色条上可显示调色板名称，「当前」标签会显示当前选中的调色板。\n\n灵活控制：使用顶部开关可随时开启或关闭调色板效果，方便对比原图与像素画效果。"
+        "answer": "在图片上传区域左侧可找到「选择调色板」面板。点击任意预设（如 PICO-8 或 Sunset 8）即可为转换应用经典复古配色。每个色板下方显示名称，「当前」会显示当前选中的调色板。使用顶部开关可随时开启或关闭调色板效果，方便对比原图与像素画效果。"
       },
       {
         "question": "PixelArtForge 除像素化外还有哪些功能？",
-        "answer": "PixelArtForge 提供完整的图片转像素画与进阶工具：\n\n1. 精选调色板：一键应用 PICO-8、Sunset 8 等经典配色。\n\n2. 像素增强：通过描边与抖动等效果增加层次，适合透明图与游戏精灵。"
+        "answer": "PixelArtForge 提供完整的图片转像素画与进阶工具：\n\n1. 精选调色板：一键应用 PICO-8、Sunset 8 等经典配色。\n\n2. 图像调整：可调节亮度、对比度、饱和度，在像素化前后微调画面效果。\n\n3. 像素增强：通过描边与抖动等效果增加层次，适合透明图与游戏精灵。"
       },
       {
         "question": "转换一张图片需要多久？",
@@ -74,6 +82,24 @@
         "answer": "可以。您对使用本工具创作的作品拥有 100% 所有权及完整商业使用权。为保障隐私，PixelArtForge 完全在浏览器内处理图片，原始文件不会上传到我们的服务器。"
       }
     ]
+  },
+  "SEOContent": {
+    "title": "最佳免费图像转像素转换器与专业生成器",
+    "description": "使用基于浏览器的转换器，立即将照片转换为纯正的像素艺术。内置 PICO-8 和 Sunset-8 等专业色板。100% 隐私安全：图片绝不上传至服务器，无需注册。",
+    "columns": {
+      "imageToPixelArt": {
+        "title": "原汁原味的图像转像素转换器",
+        "description": "将 PNG、JPG 或 WEBP 瞬间转化为高品质像素艺术。拒绝 AI 生成的模糊感，我们的算法通过锁定精确的像素格数，确保每一条边缘都干净利落，完美还原经典的 8 位与 16 位视觉风格。"
+      },
+      "gameDevTool": {
+        "title": "独立游戏开发与 Sprite 生成器",
+        "description": "专为创作者设计，支持从 16px 到 144px 的精确分辨率。支持高达 8 倍的无损缩放导出并禁用图像平滑处理，确保导出的素材在任何游戏引擎中都保持锐利清晰。"
+      },
+      "pixelArtMaker": {
+        "title": "本地运行的隐私安全像素工具",
+        "description": "零延迟使用 PICO-8 和 Gameboy 等专业色板。所有图像处理均在浏览器本地完成——图片绝不上传服务器，既保护隐私又实现极速响应。"
+      }
+    }
   },
   "Footer": {
     "copyright": "© 2026 PixelArtForge。为像素画社区打造。"

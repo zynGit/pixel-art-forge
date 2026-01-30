@@ -8,28 +8,36 @@
     "none": "Brak",
     "active": "Aktywna: ",
     "quickTip": "Szybka porada:",
-    "tipContent": "Najedź kursorem na dowolną paletę, aby zobaczyć jej nazwę, i kliknij, aby ją zastosować. Możesz użyć przełącznika, aby natychmiast porównać oryginalne kolory z wynikami generatora pixel art.",
+    "tipContent": "Nazwa każdej palety jest widoczna pod próbką; kliknij, aby zastosować. Użyj przełącznika, aby natychmiast porównać oryginalne kolory z wynikami generatora pixel art.",
     "cpuBadge": "Szybko. Lokalnie. Precyzyjnie.",
     "uploadTitle": "Przeciągnij i upuść lub kliknij, aby przesłać",
     "uploadSubtitle": "Obrazy PNG, JPG, WEBP",
     "pixelArt": "Pixel Art",
+    "originalImage": "Oryginalny obraz",
     "downloadBtn": "Pobierz PNG (HD)",
     "resolution": "Rozdzielczość",
+    "pixelationEnabled": "Pikselizacja",
     "output": "Wynik: ",
+    "outputOriginal": "Oryginał",
+    "resolutionTipContent": "Niższe wartości dają większe, bardziej retro piksele; wyższe — więcej detali. Przeciągnij suwak lub kliknij liczbę, aby zmienić.\n\nDziała, gdy Pikselizacja jest włączona; wyłącz, aby uzyskać oryginalny obraz.",
     "taglines": {
       "retroSprite": "Retro Sprite",
       "eightBit": "Klasyk 8-bitowy",
       "indieDetail": "Szczegółowość Indie",
-      "photoReal": "Fotorealistyczny"
+      "photoReal": "Fotorealistyczny",
+      "highRes": "Wysoka rozdzielczość",
+      "ultraDetail": "Ultra szczegóły"
     },
     "enhancements": {
       "title": "Ulepszenia",
       "addOutline": "Dodaj czarny kontur",
+      "addOutlineHint": "Dotyczy tylko obrazów z przezroczystością.",
       "gridOverlay": "Nakładka siatki"
     },
     "imageAdjust": {
       "title": "Regulacja obrazu",
       "resetTitle": "Resetuj ustawienia",
+      "reset": "Resetuj",
       "brightness": "Jasność",
       "contrast": "Kontrast",
       "saturation": "Nasycenie"
@@ -59,11 +67,11 @@
       },
       {
         "question": "Jak zastosować profesjonalne palety do mojego pixel artu?",
-        "answer": "Po lewej stronie obszaru przesyłania obrazów znajdziesz panel \"Wybierz paletę\". Po prostu kliknij dowolny profesjonalny zestaw (taki jak PICO-8 lub Sunset 8), aby natychmiast zastosować klasyczne profile kolorów retro do swojej konwersji.\n\nInterakcja w czasie rzeczywistym: Najedź myszą na dowolny pasek koloru, aby zobaczyć nazwę palety. Etykieta \"Aktywna\" wskaże, która paleta jest obecnie wybrana.\n\nElastyczna kontrola: Użyj przełącznika na górze, aby w dowolnym momencie włączyć lub wyłączyć efekt palety. Pozwala to łatwo porównać oryginalne kolory obrazu z profesjonalnymi wynikami retro."
+        "answer": "Po lewej stronie obszaru przesyłania obrazów znajdziesz panel \"Wybierz paletę\". Kliknij dowolny zestaw (np. PICO-8 lub Sunset 8), aby zastosować klasyczne profile kolorów retro. Nazwa każdej palety jest widoczna pod próbką; etykieta \"Aktywna\" pokazuje aktualnie wybraną paletę. Użyj przełącznika na górze, aby włączyć lub wyłączyć efekt palety i porównać oryginalne kolory z wynikami retro."
       },
       {
         "question": "Jakie dodatkowe funkcje oferuje PixelArtForge poza pikselizacją?",
-        "answer": "PixelArtForge to kompleksowy konwerter obrazu na pixel art wyposażony w zaawansowane narzędzia do rafinacji:\n\n1. Starannie dobrane palety: Natychmiast stosuj ikoniczne zestawy kolorów, takie jak PICO-8 lub Sunset 8, aby uzyskać autentyczną estetykę retro.\n\n2. Ulepszenia pikseli: Dodaj głębię dzięki specjalistycznym efektom konturu i ditheringu. Są one precyzyjnie zoptymalizowane dla obrazów z przezroczystością, co czyni go idealnym generatorem do tworzenia wysokiej jakości sprite'ów do gier."
+        "answer": "PixelArtForge to kompleksowy konwerter obrazu na pixel art wyposażony w zaawansowane narzędzia do rafinacji:\n\n1. Starannie dobrane palety: Natychmiast stosuj ikoniczne zestawy kolorów, takie jak PICO-8 lub Sunset 8, aby uzyskać autentyczną estetykę retro.\n\n2. Regulacja obrazu: Dostosuj jasność, kontrast i nasycenie przed lub po pikselizacji.\n\n3. Ulepszenia pikseli: Dodaj głębię dzięki specjalistycznym efektom konturu i ditheringu. Są one precyzyjnie zoptymalizowane dla obrazów z przezroczystością, co czyni go idealnym generatorem do tworzenia wysokiej jakości sprite'ów do gier."
       },
       {
         "question": "Ile czasu zajmuje konwersja obrazu na pixel art?",
@@ -74,6 +82,24 @@
         "answer": "Oczywiście! Zachowujesz 100% własności i pełne prawa komercyjne do wszystkich prac stworzonych za pomocą naszego konwertera. Dla Twojego bezpieczeństwa PixelArtForge przetwarza obrazy całkowicie w Twojej przeglądarce. Twoje oryginalne pliki nigdy nie są przesyłane na nasze serwery."
       }
     ]
+  },
+  "SEOContent": {
+    "title": "Najlepszy darmowy konwerter i generator obrazu na Pixel Art",
+    "description": "Natychmiast zamień zdjęcia w autentyczny pixel art. Zawiera profesjonalne palety jak PICO-8. 100% prywatności: zdjęcia nie są wysyłane na serwer. Bez rejestracji.",
+    "columns": {
+      "imageToPixelArt": {
+        "title": "Autentyczny Konwerter Obrazu na Pixel Art",
+        "description": "Natychmiast zamień PNG, JPG lub WEBP w wysokiej jakości pixel art. W przeciwieństwie do rozmytych generatorów AI, nasz algorytm precyzyjnie blokuje liczbę pikseli, zapewniając ostre krawędzie."
+      },
+      "gameDevTool": {
+        "title": "Generator Sprite'ów dla Twórców Gier",
+        "description": "Stworzony dla twórców, obsługuje stałe rozdzielczości od 16px do 144px. Eksportuj pliki z bezstratnym skalowaniem do 8x, gwarantując wyraźne sprite'y gotowe do każdego silnika gier."
+      },
+      "pixelArtMaker": {
+        "title": "Prywatne Narzędzie Pixel Art w Przeglądarce",
+        "description": "Korzystaj z profesjonalnych palet jak PICO-8 i Gameboy bez opóźnień. Przetwarzanie odbywa się lokalnie w przeglądarce – Twoje obrazy nigdy nie trafiają na serwer, co zapewnia 100% prywatności."
+      }
+    }
   },
   "Footer": {
     "copyright": "© 2026 PixelArtForge. Stworzone dla społeczności Pixel Art."

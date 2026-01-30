@@ -8,28 +8,36 @@
     "none": "Wala",
     "active": "Aktibo: ",
     "quickTip": "Mabilis na Tip:",
-    "tipContent": "I-hover ang mouse sa anumang palette para makita ang pangalan nito, at i-click para ilapat. Maaari mong gamitin ang toggle switch para agad na maikumpara ang orihinal na kulay ng larawan sa mga resulta ng pixel art generator.",
+    "tipContent": "Ang bawat palette ay may pangalang nakalagay sa ibaba; i-click para ilapat. Gamitin ang toggle switch para agad na maikumpara ang orihinal na kulay ng larawan sa mga resulta ng pixel art generator.",
     "cpuBadge": "Mabilis. Lokal. Eksakto.",
     "uploadTitle": "I-drag & drop o i-click para mag-upload",
     "uploadSubtitle": "Mga larawang PNG, JPG, WEBP",
     "pixelArt": "Pixel Art",
+    "originalImage": "Original na larawan",
     "downloadBtn": "I-download ang PNG (HD)",
     "resolution": "Resolusyon",
+    "pixelationEnabled": "Pixelation",
     "output": "Resulta: ",
+    "outputOriginal": "Original",
+    "resolutionTipContent": "Mas mababang value = mas malalaki at retro na pixel; mas mataas = mas maraming detalye. I-drag ang slider o i-click ang numero para magpalit.\n\nNaa-apply kapag naka-on ang Pixelation; i-off para makuha ang orihinal na larawan.",
     "taglines": {
       "retroSprite": "Retro Sprite",
       "eightBit": "8-bit Classic",
       "indieDetail": "Indie Detail",
-      "photoReal": "Photo Real"
+      "photoReal": "Photo Real",
+      "highRes": "Mataas na Resolusyon",
+      "ultraDetail": "Ultra Detail"
     },
     "enhancements": {
       "title": "Mga Pagpapahusay",
       "addOutline": "Magdagdag ng Black Outline",
+      "addOutlineHint": "Naaangkop lamang sa mga larawan na may transparency.",
       "gridOverlay": "Grid Overlay"
     },
     "imageAdjust": {
       "title": "Ayusin ang Larawan",
       "resetTitle": "I-reset ang mga Ayos",
+      "reset": "I-reset",
       "brightness": "Liwanag",
       "contrast": "Kontrast",
       "saturation": "Saturation"
@@ -59,11 +67,11 @@
       },
       {
         "question": "Paano ko ilalapat ang mga propesyonal na palette sa aking pixel art?",
-        "answer": "Sa kaliwa ng image upload area, makikita mo ang \"Pumili ng Palette\" panel. I-click lamang ang anumang propesyonal na preset (tulad ng PICO-8 o Sunset 8) para agad na mailapat ang mga klasikong retro color profile sa iyong conversion.\n\nReal-time na Interaksyon: I-hover ang iyong mouse sa anumang color strip para makita ang pangalan ng palette. Ang \"Aktibo\" na label ay magpapakita kung aling palette ang kasalukuyang napili.\n\nFlexible na Kontrol: Gamitin ang toggle switch sa itaas para i-enable o i-disable ang palette effect anumang oras. Pinapayagan ka nitong madaling maikumpara ang mga orihinal na kulay ng larawan sa mga propesyonal na retro na resulta."
+        "answer": "Sa kaliwa ng image upload area, makikita mo ang \"Pumili ng Palette\" panel. I-click lamang ang anumang propesyonal na preset (tulad ng PICO-8 o Sunset 8) para agad na mailapat ang mga klasikong retro color profile sa iyong conversion. Ang pangalan ng bawat palette ay nakalagay sa ibaba ng swatch; ang \"Aktibo\" na label ay nagpapakita kung aling palette ang kasalukuyang napili. Gamitin ang toggle switch sa itaas para i-enable o i-disable ang palette effect at maikumpara ang orihinal na kulay sa mga retro na resulta."
       },
       {
         "question": "Anong mga karagdagang feature ang inaalok ng PixelArtForge bukod sa pixelation?",
-        "answer": "Ang PixelArtForge ay isang komprehensibong image to pixel art converter na may mga advanced na tool sa pag-refine:\n\n1. Mga Piniling Palette: Agad na ilapat ang mga iconic na color set tulad ng PICO-8 o Sunset 8 para makamit ang tunay na retro aesthetic.\n\n2. Mga Pagpapahusay sa Pixel: Magdagdag ng lalim gamit ang mga espesyal na Outline at Dither effect. Ang mga ito ay precision-optimized para sa mga transparent na larawan, kaya ito ang perpektong pixel art generator para sa paglikha ng mataas na kalidad na mga game sprite."
+        "answer": "Ang PixelArtForge ay isang komprehensibong image to pixel art converter na may mga advanced na tool sa pag-refine:\n\n1. Mga Piniling Palette: Agad na ilapat ang mga iconic na color set tulad ng PICO-8 o Sunset 8 para makamit ang tunay na retro aesthetic.\n\n2. Image Adjust: I-fine-tune ang brightness, contrast, at saturation bago o pagkatapos ng pixelation.\n\n3. Mga Pagpapahusay sa Pixel: Magdagdag ng lalim gamit ang mga espesyal na Outline at Dither effect. Ang mga ito ay precision-optimized para sa mga transparent na larawan, kaya ito ang perpektong pixel art generator para sa paglikha ng mataas na kalidad na mga game sprite."
       },
       {
         "question": "Gaano katagal bago ma-convert ang isang larawan sa pixel art?",
@@ -74,6 +82,24 @@
         "answer": "Siyempre! Hawak mo ang 100% na pagmamay-ari at buong komersyal na karapatan para sa lahat ng likhang sining na ginawa gamit ang aming converter. Para sa iyong seguridad, ang PixelArtForge ay nagpoproseso ng mga larawan nang buo sa iyong browser. Ang iyong mga orihinal na file ay hindi kailanman inu-upload sa aming mga server."
       }
     ]
+  },
+  "SEOContent": {
+    "title": "Ang Pinakamahusay na Libreng Image to Pixel Art Converter",
+    "description": "Gawing authentic pixel art ang iyong mga larawan agad-agad. Gamit ang PICO-8 palettes. 100% private: walang images na ina-upload sa server. No signup.",
+    "columns": {
+      "imageToPixelArt": {
+        "title": "Authentic Image to Pixel Art Converter",
+        "description": "Gawing high-quality pixel art ang PNG, JPG, o WEBP agad-agad. Hindi tulad ng malabong AI, tinitiyak ng aming algorithm ang malinaw at matalas na edges para sa classic na 8-bit at 16-bit style."
+      },
+      "gameDevTool": {
+        "title": "Sprite Generator para sa Game Dev",
+        "description": "Para sa mga creator, suportado nito ang resolutions mula 16px hanggang 144px. I-export ang iyong assets nang hanggang 8x lossless scaling para sa malinaw na sprites sa anumang game engine."
+      },
+      "pixelArtMaker": {
+        "title": "Private & Browser-Based Pixel Maker",
+        "description": "Gamitin ang pro palettes tulad ng PICO-8 nang walang delay. Ang lahat ng processing ay local sa iyong browser—hindi ina-upload ang iyong images sa server para sa 100% privacy."
+      }
+    }
   },
   "Footer": {
     "copyright": "© 2026 PixelArtForge. Ginawa para sa Pixel Art Community."

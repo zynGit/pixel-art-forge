@@ -1,12 +1,13 @@
 import { MetadataRoute } from 'next'
+import { locales, defaultLocale } from '../i18n'
+
+const baseUrl = 'https://www.pixel-art.online'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: 'https://www.pixel-art.online/',
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1,
-    }
-  ]
+  return locales.map((locale) => ({
+    url: locale === defaultLocale ? `${baseUrl}/` : `${baseUrl}/${locale}`,
+    lastModified: new Date(),
+    changeFrequency: 'daily' as const,
+    priority: 1,
+  }))
 }

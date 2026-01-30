@@ -8,28 +8,36 @@
     "none": "None",
     "active": "Active: ",
     "quickTip": "Quick Tip:",
-    "tipContent": "Hover over any palette to see its name, and click to apply. You can use the toggle switch to instantly compare your original photo colors with the new pixel art generator results.",
+    "tipContent": "Each palette shows its name below the swatch; click to apply. You can use the toggle switch to instantly compare your original photo colors with the new pixel art generator results.",
     "cpuBadge": "Fast. Local. Precise.",
     "uploadTitle": "Drag & drop or Click to upload",
     "uploadSubtitle": "PNG, JPG, WEBP images",
     "pixelArt": "Pixel Art",
+    "originalImage": "Original image",
     "downloadBtn": "Download PNG (HD)",
     "resolution": "Resolution",
+    "pixelationEnabled": "Pixelation",
     "output": "Output: ",
+    "outputOriginal": "Original",
+    "resolutionTipContent": "Lower values give chunkier, more retro pixels; higher values add detail. Drag the slider or click a number to switch.\n\nApplies when Pixelation is on; turn it off to output the original image.",
     "taglines": {
       "retroSprite": "Retro Sprite",
       "eightBit": "8-bit Classic",
       "indieDetail": "Indie Detail",
-      "photoReal": "Photo Real"
+      "photoReal": "Photo Real",
+      "highRes": "High Resolution",
+      "ultraDetail": "Ultra Detail"
     },
     "enhancements": {
       "title": "Enhancements",
       "addOutline": "Add Black Outline",
+      "addOutlineHint": "Only applies to images with transparency.",
       "gridOverlay": "Grid Overlay"
     },
     "imageAdjust": {
       "title": "Image Adjust",
       "resetTitle": "Reset Adjustments",
+      "reset": "Reset",
       "brightness": "Brightness",
       "contrast": "Contrast",
       "saturation": "Saturation"
@@ -59,11 +67,11 @@
       },
       {
         "question": "How do I apply professional palettes to my pixel art?",
-        "answer": "To the left of the image upload area, you will find the \"Select Palette\" panel. Simply click on any professional preset (such as PICO-8 or Sunset 8) to instantly apply classic retro color profiles to your image to pixel art conversion.\n\nReal-time Interaction: Hover your mouse over any color strip to reveal the palette's name. The \"Active\" label will indicate which palette is currently selected.\n\nFlexible Control: Use the toggle switch at the top to enable or disable the palette effect at any time. This allows you to easily compare the original image colors with the professional retro results.\n\nBy using these curated palettes, your pixel art generator can produce more authentic artwork that adheres to classic retro hardware standards."
+        "answer": "To the left of the image upload area, you will find the \"Select Palette\" panel. Simply click on any professional preset (such as PICO-8 or Sunset 8) to instantly apply classic retro color profiles to your image to pixel art conversion. Palette names are shown below each swatch; the \"Active\" label shows the currently selected palette. Use the toggle switch at the top to enable or disable the palette effect at any time to compare the original image colors with the professional retro results.\n\nBy using these curated palettes, your pixel art generator can produce more authentic artwork that adheres to classic retro hardware standards."
       },
       {
         "question": "What additional features does PixelArtForge offer besides pixelation?",
-        "answer": "PixelArtForge is a comprehensive image to pixel art converter featuring advanced refinement tools:\n\n1. Curated Palettes: Instantly apply iconic color sets like PICO-8 or Sunset 8 to achieve authentic retro aesthetics.\n\n2. Pixel Enhancements: Add depth with specialized Outline and Dither effects. These are precision-optimized for transparent images, making it the perfect pixel art generator for creating high-quality game sprites."
+        "answer": "PixelArtForge is a comprehensive image to pixel art converter featuring advanced refinement tools:\n\n1. Curated Palettes: Instantly apply iconic color sets like PICO-8 or Sunset 8 to achieve authentic retro aesthetics.\n\n2. Image Adjust: Fine-tune brightness, contrast, and saturation before or after pixelation.\n\n3. Pixel Enhancements: Add depth with specialized Outline and Dither effects. These are precision-optimized for transparent images, making it the perfect pixel art generator for creating high-quality game sprites."
       },
       {
         "question": "How long does it take to convert an image to pixel art?",
@@ -74,6 +82,24 @@
         "answer": "Absolutely!You retain 100% ownership and full commercial rights for all artwork created with our image to pixel art converter.\nFor your security, PixelArtForge processes images entirely in your browser. Your original files are never uploaded to our servers, ensuring your creative work and privacy remain completely under your control."
       }
     ]
+  },
+  "SEOContent": {
+    "title": "The Best Free Image to Pixel Art Converter & Pro Generator",
+    "description": "Instantly turn photos into authentic pixel art with our browser-based converter. Features professional palettes like PICO-8 and Sunset-8. 100% private: no images are uploaded to any server. No signup required.",
+    "columns": {
+      "imageToPixelArt": {
+        "title": "Authentic Image to Pixel Art Converter",
+        "description": "Convert PNG, JPG, or WEBP into high-quality pixel art instantly. Unlike blurry AI generators, our algorithm locks precise pixel counts to ensure clean, sharp edges for that classic 8-bit and 16-bit aesthetic."
+      },
+      "gameDevTool": {
+        "title": "Indie Game Dev & Sprite Generator",
+        "description": "Built for creators, our tool supports fixed resolutions from 16px to 144px. Export your assets with up to 8x lossless scaling and disabled image smoothing, guaranteeing crisp sprites ready for any game engine."
+      },
+      "pixelArtMaker": {
+        "title": "Private & Browser-Based Pixel Maker",
+        "description": "Use professional palettes like PICO-8 and Gameboy with zero latency. All processing happens locally in your browser—your images are never uploaded to a server, ensuring 100% privacy and security."
+      }
+    }
   },
   "Footer": {
     "copyright": "© 2026 PixelArtForge. Built for the Pixel Art Community."

@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useState } from "react"
-import { Upload, Check, ArrowRight, Download, Twitter, Cpu,RotateCcw } from "lucide-react"
+import { Upload, Check, ArrowRight, Download, Twitter, Cpu, RotateCcw, Info } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
@@ -13,6 +13,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { useToast } from "@/hooks/use-toast"
 import { pixelateImageFromUrl } from "@/lib/pixelate"
 // import { pixelateImageFromUrl } from "@/lib/pixelate-dithering"
@@ -33,8 +39,8 @@ const palettes = [
     "#4b726e", "#574852", "#847875", "#ab9b8e"
   ]},
   { name: "SUNSET_8", colors: ["#FFF474", "#F3B05A", "#F4874B", "#F06553", "#A3586D", "#5C4A72", "#3C3B5F", "#3C3B5F"]},
+  {name: "TWILIGHT_5", colors: ["#fbbbad", "#ee8695", "#4a7a96", "#333f58", "#292831"]},
   { name: "Gameboy", colors: ["#0f380f", "#306230", "#8bac0f", "#9bbc0f"] },
-  {name: "TWILIGHT_5", colors: ["#140c1c", "#442434", "#30346d", "#597dce", "#d27d2c"]},
   { name: "Retro NES", colors: ["#000000", "#fcfcfc", "#f83800", "#7c7c7c"] },
   { name: "Cyberpunk", colors: ["#0d0221", "#ff00ff", "#00ffff", "#ffff00"] },
   { name: "Monochrome", colors: ["#000000", "#555555", "#aaaaaa", "#ffffff"] },
@@ -60,6 +66,7 @@ export function BentoGrid() {
   const [paletteEnabled, setPaletteEnabled] = useState(false)
   // index into GRID_PRESETS
   const [resolutionIndex, setResolutionIndex] = useState(6) // default 64px
+  const [pixelationEnabled, setPixelationEnabled] = useState(true) // ON = 有像素化, OFF = 原图分辨率
   const [exportScale, setExportScale] = useState("1x")
   const [enhancements, setEnhancements] = useState({
     removeBackground: false,
@@ -87,7 +94,9 @@ export function BentoGrid() {
     { value: 80, label: "80", tagline: "" },
     { value: 96, label: "96", tagline: "" },
     { value: 128, label: "128", tagline: t("taglines.photoReal") },
-    { value: 144, label: "144", tagline: t("taglines.photoReal") },
+    { value: 144, label: "144", tagline: "" },
+    { value: 192, label: "192", tagline: t("taglines.highRes") },
+    { value: 256, label: "256", tagline: t("taglines.ultraDetail") },
   ] as const
 
   const currentPreset = GRID_PRESETS[resolutionIndex]
@@ -149,14 +158,16 @@ export function BentoGrid() {
     presetIndex?: number,
     paletteIndex?: number,
     addOutlineOverride?: boolean,
-    currentFilters = filters // 传入当前滤镜
+    currentFilters = filters, // 传入当前滤镜
+    pixelationEnabledOverride?: boolean // 切换开关时传入新值，避免闭包滞后
   ) => {
     try {
       const index =
         typeof presetIndex === "number"
           ? Math.max(0, Math.min(GRID_PRESETS.length - 1, presetIndex))
           : resolutionIndex
-      const targetCellsX = GRID_PRESETS[index].value
+      const effective = typeof pixelationEnabledOverride === "boolean" ? pixelationEnabledOverride : pixelationEnabled
+      const effectiveCellsX = effective ? GRID_PRESETS[index].value : 0
       // Preview always uses scale 1, export scale is only applied when downloading
       const scale = 1
 
@@ -182,7 +193,7 @@ export function BentoGrid() {
       }
 
       const url = await pixelateImageFromUrl(sourceUrl, {
-        targetCellsX,
+        targetCellsX: effectiveCellsX,
         scale,
         palette: activePalette,
         addOutline: shouldAddOutline,
@@ -236,7 +247,7 @@ const debouncedConvert = useRef(
       debouncedConvert({
         url: originalUrl,
         options: {
-          targetCellsX: GRID_PRESETS[resolutionIndex].value,
+          targetCellsX: pixelationEnabled ? GRID_PRESETS[resolutionIndex].value : 0,
           scale: 1,
           palette: paletteEnabled && selectedPalette >= 0 ? palettes[selectedPalette].colors : [],
           addOutline: enhancements.addOutline,
@@ -261,6 +272,13 @@ const debouncedConvert = useRef(
     }
   }
 
+  const handlePixelationChange = (checked: boolean) => {
+    setPixelationEnabled(checked)
+    if (originalUrl) {
+      convertToPixelArt(originalUrl, undefined, undefined, undefined, filters, checked)
+    }
+  }
+
   const getScaleFromExport = () => {
     const parsed = parseInt(exportScale.replace("x", ""), 10)
     return Number.isNaN(parsed) ? 1 : Math.max(1, parsed)
@@ -270,13 +288,10 @@ const debouncedConvert = useRef(
   // This is an approximation based on targetCellsX and scale
   // Assumes a typical image width of 512px for calculation
   const getPixelSizeForGrid = () => {
+    if (!pixelationEnabled) return 1
     const targetCellsX = GRID_PRESETS[resolutionIndex].value
-    // const scale = getScaleFromExport()
-    // Estimate pixel size: assume base image width of 512px
     const baseWidth = 512
-    const pixelSize = Math.max(2, Math.floor(baseWidth / targetCellsX))
-    // return pixelSize * scale
-    return pixelSize
+    return Math.max(2, Math.floor(baseWidth / targetCellsX))
   }
 
   const handleDownload = async () => {
@@ -288,7 +303,7 @@ const debouncedConvert = useRef(
       const scale = getScaleFromExport();
       // 注意：这里我们只传 scale 变量，pixelate.ts 内部会自动处理基础放大
       const exportUrl = await pixelateImageFromUrl(originalUrl, {
-        targetCellsX: GRID_PRESETS[resolutionIndex].value,
+        targetCellsX: pixelationEnabled ? GRID_PRESETS[resolutionIndex].value : 0,
         scale,
         palette: paletteEnabled && selectedPalette >= 0 ? palettes[selectedPalette].colors : [],
         addOutline: enhancements.addOutline,
@@ -372,43 +387,46 @@ const debouncedConvert = useRef(
                   }}
                 />
               </div>
-              <div className="mt-4 grid grid-cols-4 gap-2">
+              <div className="mt-4 grid grid-cols-3 gap-2.5">
                 {palettes.map((palette, index) => (
-                  <button
-                    key={palette.name}
-                    type="button"
-                    onClick={async () => {
-                      if (!paletteEnabled) {
-                        setPaletteEnabled(true)
-                      }
-                      setLastSelectedPalette(index)
-                      setSelectedPalette(index)
-                      if (originalUrl) {
-                        await convertToPixelArt(originalUrl, undefined, index)
-                      }
-                    }}
-                    className={`group/palette relative flex h-10 w-10 items-center justify-center rounded-full transition-all duration-200 ${
-                      selectedPalette === index
-                        ? "ring-2 ring-accent ring-offset-2 ring-offset-background shadow-[0_0_12px_rgba(0,200,180,0.4)]"
-                        : "hover:scale-110"
-                    }`}
-                    title={palette.name}
-                  >
-                    <div className="flex h-full w-full overflow-hidden rounded-full">
-                      {palette.colors.map((color, i) => (
-                        <div
-                          key={`${palette.name}-${i}`}
-                          className="h-full flex-1"
-                          style={{ backgroundColor: color }}
-                        />
-                      ))}
-                    </div>
-                    {selectedPalette === index && (
-                      <div className="absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent">
-                        <Check className="h-2.5 w-2.5 text-background" />
+                  <div key={palette.name} className="flex flex-col items-center gap-1">
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        if (!paletteEnabled) {
+                          setPaletteEnabled(true)
+                        }
+                        setLastSelectedPalette(index)
+                        setSelectedPalette(index)
+                        if (originalUrl) {
+                          await convertToPixelArt(originalUrl, undefined, index)
+                        }
+                      }}
+                      className={`group/palette cursor-pointer relative flex h-12 w-12 items-center justify-center rounded-full transition-all duration-200 ${
+                        selectedPalette === index
+                          ? "ring-2 ring-accent ring-offset-2 ring-offset-background shadow-[0_0_12px_rgba(0,200,180,0.4)]"
+                          : "hover:scale-110"
+                      }`}
+                    >
+                      <div className="flex h-full w-full overflow-hidden rounded-full">
+                        {palette.colors.map((color, i) => (
+                          <div
+                            key={`${palette.name}-${i}`}
+                            className="h-full flex-1"
+                            style={{ backgroundColor: color }}
+                          />
+                        ))}
                       </div>
-                    )}
-                  </button>
+                      {selectedPalette === index && (
+                        <div className="absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent">
+                          <Check className="h-2.5 w-2.5 text-background" />
+                        </div>
+                      )}
+                    </button>
+                    <span className="text-[10px] text-muted-foreground truncate max-w-full text-center" title={palette.name}>
+                      {palette.name}
+                    </span>
+                  </div>
                 ))}
               </div>
               <p className="mt-3 text-xs text-muted-foreground">
@@ -465,32 +483,54 @@ const debouncedConvert = useRef(
 
               {/* Pixel Art Preview */}
               <div className={`mt-5 rounded-xl border border-border bg-secondary/30 p-4 ${pixelUrl ? " block" : " hidden"}`}>
-                <div className="flex items-center justify-between text-xs text-muted-foreground">
-                  <span className="text-accent">{t("pixelArt")}</span>
-                </div>
-                <div
-                  className={`mt-3 w-full rounded-lg bg-secondary/50 overflow-auto ${
-                    enhancements.gridOverlay ? "grid-overlay" : ""
-                  }`}
-                  style={
-                    enhancements.gridOverlay
-                      ? {
-                          "--pixel-size": getPixelSizeForGrid(),
-                        } as React.CSSProperties
-                      : undefined
-                  }
-                >
-                  {pixelUrl ? (
-                    <img
-                      src={pixelUrl}
-                      alt="Pixel art"
-                      className="w-full h-auto max-w-full"
-                      style={{ imageRendering: 'pixelated' }} // 关键：保持像素硬边缘
-                    />
-                  ) : (
-                    <span className="text-xs text-accent">{t("pixelArt")}</span>
-                  )}
-                </div>
+                <Tabs defaultValue="pixel">
+                  <TabsList className="flex w-fit items-center justify-start gap-0 rounded-lg border-0 bg-transparent p-0 h-auto text-xs text-muted-foreground">
+                    <TabsTrigger value="pixel" className="flex-none rounded-md border border-transparent px-2 py-1 text-xs data-[state=active]:border-accent dark:data-[state=active]:border-accent data-[state=active]:text-accent">
+                      {t("pixelArt")}
+                    </TabsTrigger>
+                    <TabsTrigger value="original" className="flex-none rounded-md border border-transparent px-2 py-1 text-xs data-[state=active]:border-accent dark:data-[state=active]:border-accent data-[state=active]:text-accent">
+                      {t("originalImage")}
+                    </TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="pixel" forceMount className="mt-0 data-[state=inactive]:hidden">
+                    <div
+                      className={`mt-3 w-full rounded-lg bg-secondary/50 overflow-auto ${
+                        enhancements.gridOverlay ? "grid-overlay" : ""
+                      }`}
+                      style={
+                        enhancements.gridOverlay
+                          ? {
+                              "--pixel-size": getPixelSizeForGrid(),
+                            } as React.CSSProperties
+                          : undefined
+                      }
+                    >
+                      {pixelUrl ? (
+                        <img
+                          src={pixelUrl}
+                          alt="Pixel art"
+                          className="w-full h-auto max-w-full"
+                          style={{ imageRendering: 'pixelated' }}
+                        />
+                      ) : (
+                        <span className="text-xs text-accent">{t("pixelArt")}</span>
+                      )}
+                    </div>
+                  </TabsContent>
+                  <TabsContent value="original" forceMount className="mt-0 data-[state=inactive]:hidden">
+                    <div className="mt-3 w-full rounded-lg bg-secondary/50 overflow-auto">
+                      {originalUrl ? (
+                        <img
+                          src={originalUrl}
+                          alt="Original"
+                          className="w-full h-auto max-w-full"
+                        />
+                      ) : (
+                        <span className="text-xs text-muted-foreground">{t("originalImage")}</span>
+                      )}
+                    </div>
+                  </TabsContent>
+                </Tabs>
               </div>
 
               {/* Export Controls */}
@@ -534,39 +574,64 @@ const debouncedConvert = useRef(
               <div className="absolute -inset-px rounded-2xl bg-accent/5" />
             </div>
             <div className="relative">
-              <h3 className="text-sm font-semibold text-foreground">{t("resolution")}</h3>
-              <div className="mt-6">
+              <div className="flex items-center justify-between gap-2">
+                <h3 className="text-sm font-semibold text-foreground">{t("resolution")}</h3>
+                <div className="flex items-center gap-2 shrink-0">
+                  <Label htmlFor="pixelation-switch" className="text-xs text-muted-foreground cursor-pointer whitespace-nowrap">
+                    {t("pixelationEnabled")}
+                  </Label>
+                  <Switch
+                    id="pixelation-switch"
+                    checked={pixelationEnabled}
+                    onCheckedChange={handlePixelationChange}
+                    disabled={!originalUrl}
+                  />
+                </div>
+              </div>
+              <div className="mt-4">
                 <Slider
                   value={[resolutionIndex]}
                   onValueChange={handleResolutionChange}
                   min={0}
                   max={GRID_PRESETS.length - 1}
                   step={1}
-                  className="w-full"
+                  className="w-full **:data-[slot=slider-track]:h-1 **:data-[slot=slider-thumb]:size-3"
                   disabled={!originalUrl}
                 />
-                <div className="mt-3 flex justify-between">
+                <div className="mt-2 flex justify-between">
                   {GRID_PRESETS.map((preset, index) => (
-                    <span
+                    <button
                       key={preset.value}
-                      className={`text-xs transition-colors ${
+                      type="button"
+                      onClick={async () => {
+                        setResolutionIndex(index)
+                        if (originalUrl) await convertToPixelArt(originalUrl, index)
+                      }}
+                      disabled={!originalUrl}
+                      className={`text-xs transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 ${
                         index === resolutionIndex
                           ? "text-accent font-medium"
-                          : "text-muted-foreground"
+                          : "text-muted-foreground hover:text-foreground"
                       }`}
                     >
                       {preset.label}
-                    </span>
+                    </button>
                   ))}
                 </div>
               </div>
               <p className="mt-4 text-xs text-muted-foreground">
                 {t("output")}{" "}
                 <span className="text-accent font-medium">
-                  {currentPreset.label}
-                  {currentPreset.tagline ? ` · ${currentPreset.tagline}` : ""}
+                  {pixelationEnabled
+                    ? `${currentPreset.label}${currentPreset.tagline ? ` · ${currentPreset.tagline}` : ""}`
+                    : t("outputOriginal")}
                 </span>
               </p>
+              <div className="mt-4 rounded-lg bg-accent/10 p-3">
+                <p className="text-xs leading-relaxed text-muted-foreground whitespace-pre-line">
+                  <span className="font-medium text-accent">{t("quickTip")}</span> {t("resolutionTipContent")}
+                </p>
+              </div>
             </div>
           </div>
 
@@ -579,9 +644,19 @@ const debouncedConvert = useRef(
               <h3 className="text-sm font-semibold text-foreground">{t("enhancements.title")}</h3>
               <div className="mt-4 space-y-4">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="add-outline" className="text-xs text-muted-foreground cursor-pointer">
-                    {t("enhancements.addOutline")}
-                  </Label>
+                  <div className="flex items-center gap-1.5">
+                    <Label htmlFor="add-outline" className="text-xs text-muted-foreground cursor-pointer">
+                      {t("enhancements.addOutline")}
+                    </Label>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Info className="size-3.5 text-muted-foreground/70 shrink-0" aria-hidden />
+                      </TooltipTrigger>
+                      <TooltipContent side="top" className="max-w-50">
+                        {t("enhancements.addOutlineHint")}
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
                   <Switch
                     id="add-outline"
                     disabled={!originalUrl}
@@ -594,7 +669,7 @@ const debouncedConvert = useRef(
                     }}
                   />
                 </div>
-                <div className="flex items-center justify-between">
+                {/* <div className="flex items-center justify-between">
                   <Label htmlFor="grid-overlay" className="text-xs text-muted-foreground cursor-pointer">
                     {t("enhancements.gridOverlay")}
                   </Label>
@@ -606,7 +681,7 @@ const debouncedConvert = useRef(
                       setEnhancements((prev) => ({ ...prev, gridOverlay: checked }))
                     }
                   />
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -617,16 +692,16 @@ const debouncedConvert = useRef(
                 <div className="flex items-center gap-2">
                   <h3 className="text-sm font-semibold text-foreground">{t("imageAdjust.title")}</h3>
                 </div>
-                {/* 新增重置按钮 */}
                 <Button
                   variant="ghost"
-                  size="icon"
-                  className="h-6 w-6 text-muted-foreground hover:text-accent"
+                  size="sm"
+                  className="shrink-0 -mr-2.5 flex items-center gap-1.5 text-muted-foreground hover:text-accent-foreground"
                   onClick={handleResetFilters}
                   title={t("imageAdjust.resetTitle")}
-                  disabled={!originalUrl} // 没图片时禁用
+                  disabled={!originalUrl}
                 >
                   <RotateCcw className="h-3.5 w-3.5" />
+                  {t("imageAdjust.reset")}
                 </Button>
               </div>
               <div className="space-y-6">
