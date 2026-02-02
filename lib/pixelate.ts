@@ -126,6 +126,43 @@ function addBlackOutline(data: Uint8ClampedArray, width: number, height: number)
   data.set(result)
 }
 
+// Manual implementation of Brightness, Contrast, and Saturation filters
+function applyFiltersManually(
+  data: Uint8ClampedArray,
+  filters: { brightness: number; contrast: number; saturation: number }
+) {
+  const b = filters.brightness / 100
+  const c = filters.contrast / 100
+  const s = filters.saturation / 100
+
+  for (let i = 0; i < data.length; i += 4) {
+    let r = data[i]
+    let g = data[i + 1]
+    let blue = data[i + 2]
+
+    // Brightness
+    r *= b
+    g *= b
+    blue *= b
+
+    // Contrast
+    r = (r - 128) * c + 128
+    g = (g - 128) * c + 128
+    blue = (blue - 128) * c + 128
+
+    // Saturation
+    const gray = 0.299 * r + 0.587 * g + 0.114 * blue
+    r = gray + (r - gray) * s
+    g = gray + (g - gray) * s
+    blue = gray + (blue - gray) * s
+
+    // Uint8ClampedArray automatically clamps values
+    data[i] = r
+    data[i + 1] = g
+    data[i + 2] = blue
+  }
+}
+
 // Client-side pixelation using Canvas. Returns an object URL of a PNG image.
 // Uses scheme A: slider controls logical grid cells, pixel size is derived from image width.
 export async function pixelateImageFromUrl(src: string, options: PixelateOptions): Promise<string> {
@@ -155,9 +192,23 @@ export async function pixelateImageFromUrl(src: string, options: PixelateOptions
 
         if (filters) {
           // 应用滤镜字符串，例如: "brightness(120%) contrast(110%) saturate(130%)"
-          filterCtx.filter = `brightness(${filters.brightness}%) contrast(${filters.contrast}%) saturate(${filters.saturation}%)`
+          const filterString = `brightness(${filters.brightness}%) contrast(${filters.contrast}%) saturate(${filters.saturation}%)`
+
+          // 检测浏览器是否有原生滤镜支持 (某些移动端可能不支持)
+          const isFilterSupported = "filter" in filterCtx
+          if (isFilterSupported) {
+            filterCtx.filter = filterString
+            // 双重检查：确保浏览器接受了属性赋值 (不支持的浏览器通常会忽略赋值保持为 'none' 或 undefined)
+            if (filterCtx.filter === "none" && filterString !== "none") {
+              // 赋值失败，标记为手动处理
+              ; (filterCtx as any)._manualFilter = true
+            }
+          } else {
+            // 不支持滤镜属性，标记为手动处理
+            ; (filterCtx as any)._manualFilter = true
+          }
         }
-        
+
         filterCtx.drawImage(img, 0, 0)
 
         // --- 步骤 2: 像素化逻辑 (使用处理后的 filterCanvas 代替原图 img) ---
@@ -191,6 +242,13 @@ export async function pixelateImageFromUrl(src: string, options: PixelateOptions
         baseCtx.imageSmoothingEnabled = false
         baseCtx.clearRect(0, 0, smallWidth, smallHeight)
         baseCtx.drawImage(filterCanvas, 0, 0, smallWidth, smallHeight)
+
+        // 如果需要且检测到原生滤镜未生效，则进行手动滤镜处理
+        if (filters && (filterCtx as any)._manualFilter) {
+          const imageData = baseCtx.getImageData(0, 0, smallWidth, smallHeight)
+          applyFiltersManually(imageData.data, filters)
+          baseCtx.putImageData(imageData, 0, 0)
+        }
 
         // --- 步骤 3: 调色盘与轮廓 (逻辑保持不变) ---
         let imageData: ImageData | null = null

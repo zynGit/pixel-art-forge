@@ -15,10 +15,16 @@ import {
 } from "@/components/ui/select"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { useIsMobile } from "@/components/ui/use-mobile"
 import { useToast } from "@/hooks/use-toast"
 import { pixelateImageFromUrl } from "@/lib/pixelate"
 // import { pixelateImageFromUrl } from "@/lib/pixelate-dithering"
@@ -26,20 +32,24 @@ import { useTranslations } from "next-intl"
 import { debounce } from '@/lib/utils'
 
 const palettes = [
-  {name: "PICO_8", colors: [
-    "#000000", "#1D2B53", "#7E2553", "#008751", 
-    "#AB5236", "#5F574F", "#C2C3C7", "#FFF1E8", 
-    "#FF004D", "#FFA300", "#FFEC27", "#00E436", 
-    "#29ADFF", "#83769C", "#FF77A8", "#FFCCAA"
-  ]},
-  {name: "LOST_CENTURY", colors: [
-    "#d1b187", "#c77b58", "#ae5d40", "#79444a", 
-    "#4b3d44", "#ba9158", "#927441", "#4d4539", 
-    "#77743b", "#b3a555", "#d2c9a5", "#8caba1", 
-    "#4b726e", "#574852", "#847875", "#ab9b8e"
-  ]},
-  { name: "SUNSET_8", colors: ["#FFF474", "#F3B05A", "#F4874B", "#F06553", "#A3586D", "#5C4A72", "#3C3B5F", "#3C3B5F"]},
-  {name: "TWILIGHT_5", colors: ["#fbbbad", "#ee8695", "#4a7a96", "#333f58", "#292831"]},
+  {
+    name: "PICO_8", colors: [
+      "#000000", "#1D2B53", "#7E2553", "#008751",
+      "#AB5236", "#5F574F", "#C2C3C7", "#FFF1E8",
+      "#FF004D", "#FFA300", "#FFEC27", "#00E436",
+      "#29ADFF", "#83769C", "#FF77A8", "#FFCCAA"
+    ]
+  },
+  {
+    name: "LOST_CENTURY", colors: [
+      "#d1b187", "#c77b58", "#ae5d40", "#79444a",
+      "#4b3d44", "#ba9158", "#927441", "#4d4539",
+      "#77743b", "#b3a555", "#d2c9a5", "#8caba1",
+      "#4b726e", "#574852", "#847875", "#ab9b8e"
+    ]
+  },
+  { name: "SUNSET_8", colors: ["#FFF474", "#F3B05A", "#F4874B", "#F06553", "#A3586D", "#5C4A72", "#3C3B5F", "#3C3B5F"] },
+  { name: "TWILIGHT_5", colors: ["#fbbbad", "#ee8695", "#4a7a96", "#333f58", "#292831"] },
   { name: "Gameboy", colors: ["#0f380f", "#306230", "#8bac0f", "#9bbc0f"] },
   { name: "Retro NES", colors: ["#000000", "#fcfcfc", "#f83800", "#7c7c7c"] },
   { name: "Cyberpunk", colors: ["#0d0221", "#ff00ff", "#00ffff", "#ffff00"] },
@@ -48,7 +58,7 @@ const palettes = [
   { name: "Ocean", colors: ["#03071e", "#0077b6", "#00b4d8", "#90e0ef"] },
   { name: "Forest", colors: ["#1b4332", "#2d6a4f", "#52b788", "#95d5b2"] },
   { name: "Candy", colors: ["#ff0a54", "#ff477e", "#ff85a1", "#fbb1bd"] },
-  
+
 ]
 
 const pixelArtIdeas = [
@@ -61,6 +71,7 @@ const pixelArtIdeas = [
 
 export function BentoGrid() {
   const t = useTranslations("BentoGrid")
+  const isMobile = useIsMobile()
   const [selectedPalette, setSelectedPalette] = useState(-1)
   const [lastSelectedPalette, setLastSelectedPalette] = useState(0)
   const [paletteEnabled, setPaletteEnabled] = useState(false)
@@ -85,7 +96,7 @@ export function BentoGrid() {
     contrast: 100,
     saturation: 100,
   })
-  
+
   const GRID_PRESETS = [
     { value: 16, label: "16", tagline: t("taglines.retroSprite") },
     { value: 32, label: "32", tagline: t("taglines.eightBit") },
@@ -215,34 +226,34 @@ export function BentoGrid() {
     }
   }
   // 1. 引入 useRef 来记录最新的转换请求 ID
-const processingId = useRef(0);
+  const processingId = useRef(0);
 
-// 2. 编写一个带有防抖功能的处理函数
-const debouncedConvert = useRef(
-  debounce(async (params) => {
-    const currentId = ++processingId.current;
-    
-    try {
-      const url = await pixelateImageFromUrl(params.url, params.options);
-      
-      // 检查这是否仍然是最新的请求，防止竞态条件
-      if (currentId === processingId.current) {
-        // 只有在确认要替换新图时，才延迟撤销旧图
-        // 不要立即执行 revoke，或者保留一个旧 URL 队列
-        setPixelUrl(url);
-      } else {
-        URL.revokeObjectURL(url); // 如果不是最新的，直接销毁
+  // 2. 编写一个带有防抖功能的处理函数
+  const debouncedConvert = useRef(
+    debounce(async (params) => {
+      const currentId = ++processingId.current;
+
+      try {
+        const url = await pixelateImageFromUrl(params.url, params.options);
+
+        // 检查这是否仍然是最新的请求，防止竞态条件
+        if (currentId === processingId.current) {
+          // 只有在确认要替换新图时，才延迟撤销旧图
+          // 不要立即执行 revoke，或者保留一个旧 URL 队列
+          setPixelUrl(url);
+        } else {
+          URL.revokeObjectURL(url); // 如果不是最新的，直接销毁
+        }
+      } catch (e) {
+        console.error(e);
       }
-    } catch (e) {
-      console.error(e);
-    }
-  }, 50) // 50ms 的防抖，平衡灵敏度与性能
-).current;
+    }, 50) // 50ms 的防抖，平衡灵敏度与性能
+  ).current;
   // 3. 滤镜变更处理函数
   const handleFilterChange = (key: keyof typeof filters, value: number[]) => {
     const newFilters = { ...filters, [key]: value[0] };
     setFilters(newFilters);
-    
+
     if (originalUrl) {
       debouncedConvert({
         url: originalUrl,
@@ -296,10 +307,10 @@ const debouncedConvert = useRef(
 
   const handleDownload = async () => {
     if (!originalUrl) return;
-  
+
     try {
       toast({ title: t("toasts.generating") });
-  
+
       const scale = getScaleFromExport();
       // 注意：这里我们只传 scale 变量，pixelate.ts 内部会自动处理基础放大
       const exportUrl = await pixelateImageFromUrl(originalUrl, {
@@ -308,12 +319,12 @@ const debouncedConvert = useRef(
         palette: paletteEnabled && selectedPalette >= 0 ? palettes[selectedPalette].colors : [],
         addOutline: enhancements.addOutline,
       });
-  
+
       const link = document.createElement("a");
       link.href = exportUrl;
       link.download = `PixelArtForge-${Date.now()}.png`;
       link.click();
-  
+
       // 提示：不需要立刻 revoke，让浏览器完成下载过程
       toast({ title: t("toasts.downloadStarted") });
     } catch (error) {
@@ -351,7 +362,7 @@ const debouncedConvert = useRef(
 
         {/* Bento Grid */}
         <div className="mt-1 grid grid-cols-1 gap-4 md:grid-cols-4 md:grid-rows-[auto_auto_auto]">
-          
+
           {/* Color Palette Card - Top Left */}
           <div className="group relative overflow-hidden rounded-2xl border border-border bg-card/80 p-5 transition-all duration-300 hover:border-accent/50 md:col-span-1">
             <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -402,11 +413,10 @@ const debouncedConvert = useRef(
                           await convertToPixelArt(originalUrl, undefined, index)
                         }
                       }}
-                      className={`group/palette cursor-pointer relative flex h-12 w-12 items-center justify-center rounded-full transition-all duration-200 ${
-                        selectedPalette === index
-                          ? "ring-2 ring-accent ring-offset-2 ring-offset-background shadow-[0_0_12px_rgba(0,200,180,0.4)]"
-                          : "hover:scale-110"
-                      }`}
+                      className={`group/palette cursor-pointer relative flex h-12 w-12 items-center justify-center rounded-full transition-all duration-200 ${selectedPalette === index
+                        ? "ring-2 ring-accent ring-offset-2 ring-offset-background shadow-[0_0_12px_rgba(0,200,180,0.4)]"
+                        : "hover:scale-110"
+                        }`}
                     >
                       <div className="flex h-full w-full overflow-hidden rounded-full">
                         {palette.colors.map((color, i) => (
@@ -453,11 +463,10 @@ const debouncedConvert = useRef(
             <div className="relative flex h-full flex-col">
               {/* Upload Area */}
               <div
-                className={`flex flex-col items-center justify-center rounded-xl border-2 border-dashed px-6 py-4 transition-colors cursor-pointer ${
-                  isDragging
-                    ? "border-accent bg-accent/10"
-                    : "border-border bg-secondary/30 hover:border-accent/50 hover:bg-secondary/50"
-                }`}
+                className={`flex flex-col items-center justify-center rounded-xl border-2 border-dashed px-6 py-4 transition-colors cursor-pointer ${isDragging
+                  ? "border-accent bg-accent/10"
+                  : "border-border bg-secondary/30 hover:border-accent/50 hover:bg-secondary/50"
+                  }`}
                 onClick={handleUploadClick}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
@@ -494,14 +503,13 @@ const debouncedConvert = useRef(
                   </TabsList>
                   <TabsContent value="pixel" forceMount className="mt-0 data-[state=inactive]:hidden">
                     <div
-                      className={`mt-3 w-full rounded-lg bg-secondary/50 overflow-auto ${
-                        enhancements.gridOverlay ? "grid-overlay" : ""
-                      }`}
+                      className={`mt-3 w-full rounded-lg bg-secondary/50 overflow-auto ${enhancements.gridOverlay ? "grid-overlay" : ""
+                        }`}
                       style={
                         enhancements.gridOverlay
                           ? {
-                              "--pixel-size": getPixelSizeForGrid(),
-                            } as React.CSSProperties
+                            "--pixel-size": getPixelSizeForGrid(),
+                          } as React.CSSProperties
                           : undefined
                       }
                     >
@@ -608,11 +616,10 @@ const debouncedConvert = useRef(
                         if (originalUrl) await convertToPixelArt(originalUrl, index)
                       }}
                       disabled={!originalUrl}
-                      className={`text-xs transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 ${
-                        index === resolutionIndex
-                          ? "text-accent font-medium"
-                          : "text-muted-foreground hover:text-foreground"
-                      }`}
+                      className={`text-xs transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 ${index === resolutionIndex
+                        ? "text-accent font-medium"
+                        : "text-muted-foreground hover:text-foreground"
+                        }`}
                     >
                       {preset.label}
                     </button>
@@ -648,14 +655,33 @@ const debouncedConvert = useRef(
                     <Label htmlFor="add-outline" className="text-xs text-muted-foreground cursor-pointer">
                       {t("enhancements.addOutline")}
                     </Label>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Info className="size-3.5 text-muted-foreground/70 shrink-0" aria-hidden />
-                      </TooltipTrigger>
-                      <TooltipContent side="top" className="max-w-50">
-                        {t("enhancements.addOutlineHint")}
-                      </TooltipContent>
-                    </Tooltip>
+                    {isMobile ? (
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <button
+                            type="button"
+                            className="shrink-0 rounded p-0.5 text-muted-foreground/70 hover:text-muted-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                            aria-label={t("enhancements.addOutlineHint")}
+                          >
+                            <Info className="size-3.5" aria-hidden />
+                          </button>
+                        </PopoverTrigger>
+                        <PopoverContent side="top" className="max-w-50 w-auto p-3 text-sm">
+                          {t("enhancements.addOutlineHint")}
+                        </PopoverContent>
+                      </Popover>
+                    ) : (
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <span className="inline-flex shrink-0 cursor-default rounded p-0.5 text-muted-foreground/70" aria-hidden>
+                            <Info className="size-3.5" />
+                          </span>
+                        </TooltipTrigger>
+                        <TooltipContent side="top" className="max-w-50">
+                          {t("enhancements.addOutlineHint")}
+                        </TooltipContent>
+                      </Tooltip>
+                    )}
                   </div>
                   <Switch
                     id="add-outline"
