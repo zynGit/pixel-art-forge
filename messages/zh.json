@@ -59,7 +59,7 @@
   },
   "FAQSection": {
     "title": "图片转像素画 常见问题",
-    "description": "对我们的像素画生成器有疑问？查看右侧详情，了解专业转换与调色板设置技巧。",
+    "description": "如有任何疑问，请发送邮件至：support@pixel-art.online",
     "items": [
       {
         "question": "什么是 PixelArtForge？",

@@ -59,7 +59,7 @@
   },
   "FAQSection": {
     "title": "Image to Pixel Art FAQ",
-    "description": "Have questions about our pixel art generator? Check the details on the right for tips on professional image to pixel art conversion and palette settings.",
+    "description": "For any questions, you can email us at: support@pixel-art.online",
     "items": [
       {
         "question": "What is PixelArtForge?",
@@ -105,4 +105,3 @@
     "copyright": "© 2026 PixelArtForge. Built for the Pixel Art Community."
   }
 }
-
