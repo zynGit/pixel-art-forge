@@ -66,6 +66,9 @@ export async function generateMetadata({
       icon: "/icon.png",
       apple: "/icon.png",
     },
+    verification: {
+      yandex: 'e66aced5c5f85655',
+    },
   }
 }
 
