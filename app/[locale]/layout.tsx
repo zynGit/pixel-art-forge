@@ -62,10 +62,7 @@ export async function generateMetadata({
         "Free online pixel art converter. Instantly turn images into pixel art with pro palettes like PICO-8 & Sunset 8. 100% private, fast, and easy.",
       images: ["/og-image.JPG"],
     },
-    icons: {
-      icon: "/icon.png",
-      apple: "/icon.png",
-    },
+
     verification: {
       yandex: 'e66aced5c5f85655',
     },
